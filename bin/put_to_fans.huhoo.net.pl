@@ -24,6 +24,7 @@ GetOptions (
 		"h|host|hostname=s"	=> \$ARGV{host},
 		"u|user|username=s"	=> \$ARGV{user},
 		"w|pass|password=s"	=> \$ARGV{pass},
+		"a|action=s"		=> \$ARGV{action},
 		"lf|localfile=s"	=> \$ARGV{localfile},
 		"ld|localdir=s"		=> \$ARGV{localdir},
 		"rf|remotefile=s"	=> \$ARGV{remotefile},
@@ -36,7 +37,7 @@ GetOptions (
 		) or pod2usage(2);
 pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
-$ARGV{conf} = "../conf/config.cfg" unless ($ARGV && -f $ARGV{conf});
+$ARGV{conf} = "$Bin/../conf/config.cfg" unless ($ARGV && -f $ARGV{conf});
 pod2usage() unless (-f $ARGV{conf});
 
 # use vars qw/@files/;
@@ -48,26 +49,29 @@ $conf->read_file($ARGV{'conf'});
 
 my $ftp = Net::FTP->new (
 		$ARGV{'host'},
+		Port => ($ARGV{'port'} ? $ARGV{'port'} : 21),
 		Debug => 0
 		) or die "Cannot connect to $ARGV{'host'}: $@";
 
 $ftp->login($ARGV{'user'}, $ARGV{'pass'}) or die "Cannot login ", $ftp->message;
 
-print Dumper $ftp->ls("/fans.huhoo.net/perlxs");
-print $ARGV{'remotefile'}, "\n";
+#print Dumper $ftp->ls("/fans.huhoo.net/perlxs");
+print Dumper $ftp->dir("/fans.huhoo.net/perlxs");
+#print $ARGV{'remotefile'}, "\n";
 $ftp->cwd("/fans.huhoo.net/perlxs") or die "Cannot change working directory ", $ftp->message;
-$ftp->get("perlxs.xul") or die "get failed ", $ftp->message;
+#$ftp->get("perlxs.xul") or die "get failed ", $ftp->message;
+$ftp->put($ARGV{'localfile'}) or die "put failed ", $ftp->message if ($ARGV{'localfile'} && -f $ARGV{'localfile'});
 print $ftp->pwd(), "\n" or die "Can't get current path", $ftp->message;
 
 
-if ($ftp->isfile("perlxs.xul"))
-{
-	print "ok\n";
-}
-else 
-{
-	print "fail\n";
-}
+#if ($ftp->isfile("perlxs.xul"))
+#{
+#	print "ok\n";
+#}
+#else 
+#{
+#	print "fail\n";
+#}
 
 
 # sub GetFileFromDir
@@ -91,6 +95,8 @@ put_to_fans.huhoo.net.pl - Put Files To FTP Site
 =head1 SYNOPSIS
 
 put_to_fans.huhoo.net.pl -c <conf>
+
+put_to_fans.huhoo.net.pl -c <conf> -h <host> -u <user> -w <password> -a <action> -lf <localfile>
 
 put_to_fans.huhoo.net.pl -help
 
@@ -117,6 +123,10 @@ Ftp password.
 =item B<-P|--port>
 
 Ftp port.
+
+=item B<-a|--action>
+
+Ftp action which method do.
 
 =item B<-lf|--localfile>
 

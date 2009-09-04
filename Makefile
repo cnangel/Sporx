@@ -5,7 +5,7 @@ ALL_T_HTML:=$(shell ls -1 slides/*.slides | perl -pe 's/slides$$/xul/;s/^.*\///'
 all: $(ALL_T_HTML)
 
 manifest: clean
-	find . -type f | perl -pe 's/..//' > MANIFEST
+	find . -type f | perl -pe 's/..//' | grep -v ^.git > MANIFEST
 
 dist: doc manifest META.yml
 	H=`pwd`; \
@@ -25,4 +25,4 @@ doc:
 	perl bin/render-template $< $@
 
 clean purge:
-	-rm *.xul Sporx-*.tar.gz
+	-rm -rf *.xul Sporx-*.tar.gz
