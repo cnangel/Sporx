@@ -14,6 +14,11 @@ Everything you need is in this folder.
     make yourstuff.xul      # or simply: make
     open yourstuff.xul      # point your Firefox browser at the xul file
 
+ftp tools
+
+	./ftp.pl -h www.xxx.com -u username -w password -rd /remotedir -lf /a/b/localfile -a 9
+	./ftp.pl -h www.xxx.com -u username -w password -rd /remotedir -rf remotefile -a 5
+
 AUTHORS
 =======
 
