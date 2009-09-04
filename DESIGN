@@ -1,0 +1,42 @@
+=== Notes
+
+* Current takahashi:
+** Each slide's source separated by '----'
+** Each slide is turned into HTML
+
+=== Goals
+
+* Normal looking section uses current processing
+
+* Preprocess slide into javascript function
+* Each function returns HTML
+* Support a stash
+
+* $foo is stash variable
+* @foo is local variable
+* %foo is global/config variable
+
+* Support effects
+
+    %slide_effect = 'bleach'
+    %bullet_effect = 'slide_from_left'
+    %theme = 'dark.css'
+
+** Scriptaculous
+
+* To create a heredoc
+
+----
+$multiline = <end>
+
+<end>
+$two_lines =
+line1
+line2
+----
+$_ = $intro.replace(/\*/g, 'ø');
+----
+$_ .=
+* Next point
+** Foo
+** Bar

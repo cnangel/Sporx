@@ -1,0 +1,24 @@
+NAME
+    Sporx - Spork meets Takahashi
+
+SYNOPSIS
+        > vim slides/MyShow.slides
+        > make
+        > open MyShow.xul
+
+DESCRIPTION
+    Sporx (pronounced "Sporkahashi") is a mashup of the best ideas from
+    CPAN's Spork and the XUL's Takahashi Method slideshow presentation
+    softwares.
+
+AUTHOR
+    Ingy döt Net <ingy@cpan.org>
+
+COPYRIGHT
+    Copyright (c) 2006. Ingy döt Net. All rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+    See <http://www.perl.com/perl/misc/Artistic.html>
+

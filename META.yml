@@ -1,0 +1,7 @@
+---
+name: Sporx
+version: 0.10
+author:
+  - Ingy döt Net <ingy@cpan.org>
+abstract: Spork meets Takahashi
+license: mpl

@@ -1,0 +1,24 @@
+Sporx (pronounced "Sporkahashi") is a mashup of Spork and Takahashi.
+
+See 'Changes' file for recent changes.
+
+INSTALLATION
+============
+
+Everything you need is in this folder.
+
+    tar xzf Sporx-0.xx.tar.gz
+    cd Sporx-0.xx
+    cp slides/sporx.slides slides/yourstuff.slides
+    vim yourstuff.slides    # edit your slides
+    make yourstuff.xul      # or simply: make
+    open yourstuff.xul      # point your Firefox browser at the xul file
+
+AUTHORS
+=======
+
+Sporx was written by Ingy döt Net.
+
+Spork was written by Brian Ingerson.
+
+Takahashi was written by SHIMODA Hiroshi.

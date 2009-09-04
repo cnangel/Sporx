@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Template;
+use IO::All;
+use YAML;
+
+my ($slides_path, $output_path) = @ARGV;
+
+my $t = Template->new(
+    {
+        INCLUDE_PATH => ['.', 'template/'],
+    }
+);
+
+my $config = YAML::LoadFile('config.yaml');
+my $main_template = $config->{main_template} || 'sporx.xul';
+
+my $data = {
+    %$config,
+    slides_content => io($slides_path)->all,
+};
+
+my $result;
+
+$t->process($main_template, $data, \$result) or die $t->error;
+
+unlink($output_path);
+io($output_path)->print($result);
