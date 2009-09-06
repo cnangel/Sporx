@@ -7,7 +7,7 @@ use warnings;
 use vars qw/$starttime %ARGV/;
 BEGIN { $starttime = (times)[0] + (times)[1]; }
 END { printf("%d\n", ((times)[0] + (times)[1] - $starttime) * 1000) if ($ARGV{debug}); }
-use Getopt::Long;
+use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
 # use File::Find;
 use FindBin qw/$Bin/;
@@ -66,16 +66,17 @@ $passive ||= 0;
 $action = 1 unless ($action);
 my ($ftp, $rfiles, $result) = ('') x 3; 
 printf("[ACTION]:%d (%b)\n", $action, $action) if ($debug);
+printf("[PASSIVE]:%d\n", $passive) if ($debug);
 
 $ftp = Net::FTP->new (
 		Host => $host,
 		Port => $port,
 		Timeout => $timeout,
-		Passive =>  $passive,
+		Passive => $passive,
 		Debug => $debug,
 		) or die "Cannot connect to $host: $@";
 $ftp->login($user, $pass) or die "Cannot login ", $ftp->message;
-#print Dumper $ftp->ls("/fans.huhoo.net/perlxs");
+# print Dumper $ftp->ls("/");
 $rfiles = eval { $ftp->dir($remotedir) } if (($action & 0x01) == 1);
 print Dumper $rfiles;
 if ($rfiles && (scalar @$rfiles != 0 || ($action & 0x02) == 0x02)) 
