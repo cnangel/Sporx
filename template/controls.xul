@@ -1,87 +1,348 @@
-<deck flex="1" id="deck">
- <vbox flex="1" onmousemove="Sporx.onMouseMoveOnCanvas(event);">
-  <toolbox id="canvasToolbar">
-   <toolbar>
-    <toolbarbutton oncommand="Sporx.home()" label="|&lt;&lt;" observes="canBack"/>
-    <toolbarbutton oncommand="Sporx.back()" label="&lt;" observes="canBack"/>
-    <toolbarbutton oncommand="Sporx.forward()" label="&gt;" observes="canForward"/>
-    <toolbarbutton oncommand="Sporx.end()" label="&gt;&gt;|" observes="canForward"/>
-    <toolbarseparator/>
-    <hbox align="center">
-     <textbox id="current_page" size="4" oninput="if (this.value) Sporx.showPage(parseInt(this.value)-1);"/>
-     <description value="/"/>
-     <description id="max_page"/>
-    </hbox>
-    <toolbarseparator/>
-    <vbox flex="2">
-     <spacer flex="1"/>
-     <scrollbar id="scroller" align="center" orient="horizontal" oncommand="Sporx.showPage(parseInt(event.target.getAttribute('curpos')));" onclick="Sporx.showPage(parseInt(event.target.getAttribute('curpos')));" onmousedown="Sporx.onScrollerDragStart();" onmousemove="Sporx.onScrollerDragMove();" onmouseup="Sporx.onScrollerDragDrop();"/>
-     <spacer flex="1"/>
-    </vbox>
-    <toolbarseparator/>
-    <spacer flex="1"/>
-    <toolbarseparator/>
-    <toolbarbutton id="toggleEva" label="Eva" type="checkbox" autoCheck="false" oncommand="Sporx.toggleEvaMode();"/>
-    <toolbarseparator/>
-    <toolbarbutton label="Edit" oncommand="Sporx.toggleEditMode();"/>
-    <toolbarbutton oncommand="Sporx.reload();" label="Reload"/>
-   </toolbar>
-  </toolbox>
-  <vbox flex="1" id="canvas" onclick="Sporx.onPresentationClick(event);">
-   <spacer flex="1"/>
-   <hbox flex="1">
-    <spacer flex="1"/>
-    <vbox id="content"/>
-    <spacer flex="1"/>
-   </hbox>
-   <spacer flex="1"/>
-  </vbox>
- </vbox>
- <vbox flex="1" id="edit">
-  <toolbox>
-   <toolbar>
-    <toolbarbutton label="New Page" oncommand="Sporx.addPage()"/>
-    <spacer flex="1"/>
-    <toolbarseparator/>
-    <toolbarbutton label="View" oncommand="Sporx.toggleEditMode();"/>
-    <toolbarbutton oncommand="Sporx.reload();" label="Reload"/>
-   </toolbar>
-  </toolbox>
-  <textbox id="textField" flex="1" multiline="true" oninput="Sporx.onEdit()"/>
-  <hbox collapsed="true">
-   <iframe id="dataLoader" onload="if (window.Sporx) Sporx.onDataLoad();"/>
-  </hbox>
- </vbox>
-</deck>
+﻿<deck flex="1" id="deck"> 
+	 
+<vbox flex="1"> 
+	<toolbox id="canvasToolbar">
+		<toolbar>
 
-<broadcasterset>
- <broadcaster id="canBack"/>
- <broadcaster id="canForward"/>
+			<toolbarbutton oncommand="Presentation.home()" label="|&lt;&lt;"
+				observes="canBack"/>
+			<toolbarbutton oncommand="Presentation.back()" label="&lt;"
+				observes="canBack"/>
+			<toolbarbutton oncommand="Presentation.forward()" label="&gt;"
+				observes="canForward"/>
+			<toolbarbutton oncommand="Presentation.end()" label="&gt;&gt;|"
+				observes="canForward"/>
+			<toolbarseparator/>
+			<hbox align="center">
+				<textbox id="current_page" size="4"
+					oninput="if (this.value) Presentation.showPage(parseInt(this.value)-1);"/>
+				<toolbarbutton id="pages-list-button"
+					type="menu"
+					label="Select Page"
+					tooltiptext="Select Page"
+					class="dropmarker-button">
+					<menupopup id="pages-list"
+						onpopupshowing="if (event.target == this) Presentation.preventToShowHideToolbar = true;"
+						onpopuphiding="if (event.target == this) Presentation.preventToShowHideToolbar = false;"
+						oncommand="Presentation.showPage(parseInt(event.target.value));"/>
+
+				</toolbarbutton>
+				<description value="/"/>
+				<description id="max_page"/>
+			</hbox>
+			<toolbarseparator/>
+			<vbox flex="2">
+				<spacer flex="1"/>
+				<scrollbar id="scroller"
+					align="center" orient="horizontal"
+					oncommand="Presentation.showPage(parseInt(event.target.getAttribute('curpos')));"
+					onclick="Presentation.showPage(parseInt(event.target.getAttribute('curpos')));"
+					onmousedown="Presentation.onScrollerDragStart();"
+					onmousemove="Presentation.onScrollerDragMove();"
+					onmouseup="Presentation.onScrollerDragDrop();"/>
+				<spacer flex="1"/>
+
+			</vbox>
+			<toolbarseparator/>
+			<toolbarbutton label="Pen"
+				id="penButton"
+				type="checkbox"
+				autoCheck="false"
+				oncommand="StrokablePresentationService.toggleCheck();"/>
+			<spacer flex="1"/>
+			<toolbarbutton id="func-menu-button"
+				type="menu"
+				label="Function">
+				<menupopup
+					onpopupshowing="if (event.target == this) { Presentation.preventToShowHideToolbar = true; Presentation.updateTimerItem(); }"
+					onpopuphiding="if (event.target == this) Presentation.preventToShowHideToolbar = false;">
+					<menuitem id="timerItem"
+						label="Set Timer"
+						label-normal="Set Timer"
+						label-active="Reset Timer (rest %smin)"
+						oncommand="Presentation.setTimer();" />
+					<menuseparator/>
+					<menuitem label="Start Auto-Cruise"
+						id="autoButton"
+						type="checkbox"
+						autoCheck="false"
+						oncommand="Presentation.toggleAutoCruiseMode();" />
+
+					<menu id="auto-interval-button"
+						label="Change Interval">
+						<menupopup id="auto-interval-list"
+							onpopupshowing="(this.getElementsByAttribute('value', Presentation.autoCruiseInterval)[0] || this.lastChild).setAttribute('checked', true);"
+							oncommand="Presentation.changeAutoCruiseInterval(parseInt(event.target.value));">
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="1 sec" value="1000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="2 sec" value="2000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="3 sec" value="3000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="4 sec" value="4000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="5 sec" value="5000"/>
+							<menuseparator/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="1 min" value="60000"/>
+
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="2 min" value="120000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="3 min" value="180000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="4 min" value="240000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="5 min" value="300000"/>
+							<menuseparator/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="Custom"
+								oncommand="
+									var current = Presentation.autoCruiseInterval;
+									var val = parseInt(prompt('input interval (sec)', parseInt(current/1000)));
+									if (isNaN(val)) {
+										event.preventBubble();
+										return;
+									}
+									else
+										val = val * 1000;
+									this.value = val;
+								"/>
+						</menupopup>
+					</menu>
+					<menuseparator/>
+
+					<menuitem oncommand="Presentation.print();" label="Print"/>
+					<menu id="auto-interval-button"
+						label="Thumbnail Format">
+						<menupopup
+							onpopupshowing="(this.getElementsByAttribute('value', Presentation.imageType)[0] || this.firstChild).setAttribute('checked', true);"
+							oncommand="Presentation.imageType = event.target.value;">
+							<menuitem type="radio" radiogroup="print-image-type"
+								label="PNG" value="png"/>
+							<menuitem type="radio" radiogroup="print-image-type"
+								label="JPEG (50%)" value="jpeg"/>
+						</menupopup>
+					</menu>
+					<menuseparator/>
+					<menuitem id="showPlainText" label="View Source"
+						key="key_plainText"
+						oncommand="Presentation.showPlainText();"/>
+
+					<menuseparator/>
+					<menuitem id="toggleEva" label="Eva Mode"
+						key="key_toggleEvaMode"
+						type="checkbox"
+						autoCheck="false"
+						oncommand="Presentation.toggleEvaMode();"/>
+				</menupopup>
+			</toolbarbutton>
+			<toolbarseparator/>
+			<toolbarbutton label="Edit"
+				oncommand="Presentation.toggleEditMode();"/>
+			<toolbarbutton oncommand="Presentation.reload();" label="Reload"/>
+		</toolbar>
+	</toolbox>
+
+	<vbox flex="1" id="canvas">
+		<stack flex="1">
+			<vbox flex="1">
+				<hbox id="headerBox" flex="1">
+					<label id="header"/>
+					<spacer flex="1"/>
+					<vbox>
+						<image id="logo"/>
+						<spacer flex="1"/>
+
+					</vbox>
+				</hbox>
+				<spacer flex="19"/>
+				<hbox id="footerBox" flex="1">
+					<spacer flex="1"/>
+					<label id="footer"/>
+				</hbox>
+			</vbox>
+			<vbox id="canvasMain"
+				flex="1"
+				onmouseup="Presentation.handleEvent(event);"
+				onmousedown="Presentation.handleEvent(event);"
+				onmousemove="Presentation.handleEvent(event);"
+				onclick="Presentation.onPresentationClick(event);">
+
+				<spacer flex="1"/>
+				<hbox flex="1" id="contentBox">
+					<spacer flex="1"/>
+					<vbox id="content"/>
+					<spacer flex="1"/>
+				</hbox>
+				<spacer flex="1"/>
+			</vbox>
+			<vbox id="plainTextBox"
+				hidden="true"
+				flex="1"
+				onclick="Presentation.hidePlainText();"
+				align="center"
+				pack="center">
+
+				<textbox id="plainTextField" multiline="true"
+					onkeypress="if (event.keyCode == event.DOM_VK_ESCAPE) Presentation.hidePlainText();"
+					onclick="event.stopPropagation();"/>
+			</vbox>
+		</stack>
+	</vbox>
+	<hbox id="indicatorBar"
+		onclick="Presentation.onIndicatorBarClick(event);">
+		<stack flex="1">
+			<vbox>
+				<progressmeter id="remainingPageIndicator"
+					type="determined" value="0"
+					flex="1"/>
+				<progressmeter id="remainingTimeIndicator"
+					type="determined" value="0"
+					flex="1"
+					collapsed="true"/>
+
+			</vbox>
+			<hbox flex="1">
+				<label value="Next:"/>
+				<description id="nextPage" flex="1" crop="end"/>
+			</hbox>
+		</stack>
+	</hbox>
+</vbox>
+ 
+<vbox flex="1" id="edit"> 
+	<toolbox>
+
+		<toolbar>
+			<menubar flex="1">
+				<menu label="File">
+					<menupopup>
+						<menuitem label="Save"
+							key="key_save"
+							oncommand="Presentation.output()"/>
+						<menuitem label="Reload"
+							key="key_reload"
+							oncommand="Presentation.reload()"/>
+					</menupopup>
+				</menu>
+				<menu label="Insert">
+
+					<menupopup>
+						<menuitem label="New Page"
+							key="key_insert_newpage"
+							oncommand="Presentation.insert('page')"/>
+						<menuseparator/>
+						<menuitem label="Header"
+							oncommand="Presentation.insert('header')"/>
+						<menuitem label="Footer"
+							oncommand="Presentation.insert('footer')"/>
+						<menuseparator/>
+						<menuitem label="Link"
+							oncommand="Presentation.insert('link')"/>
+						<menuitem label="Emphasis"
+							oncommand="Presentation.insert('em')"/>
+						<menuitem label="Preformatted"
+							oncommand="Presentation.insert('pre')"/>
+
+						<menuitem label="Monta"
+							oncommand="Presentation.insert('monta')"/>
+						<menuitem label="Image"
+							oncommand="Presentation.insert('img')"/>
+					</menupopup>
+				</menu>
+			</menubar>
+			<toolbarseparator/>
+			<toolbarbutton label="View"
+				oncommand="Presentation.toggleEditMode();"/>
+			<toolbarbutton oncommand="Presentation.reload();" label="Reload"/>
+		</toolbar>
+
+	</toolbox>
+	<tabbox id="editTabBox" flex="1">
+		<tabs onselect="Presentation.toggleEditStyle(event);">
+			<tab label="Page Edit" id="editTab-pages"/>
+			<tab label="Source" id="editTab-source"/>
+		</tabs>
+		<tabpanels flex="1">
+			<scrollbox id="pageEditFields"
+				orient="vertical"
+				flex="1"/>
+			<textbox id="sourceEditField"
+				flex="1"
+				multiline="true"
+				oninput="Presentation.onEditSource()"/>
+
+		</tabpanels>
+	</tabbox>
+</vbox>
+ 
+</deck> 
+  
+<data style="visibility: collapse;"> 
+	<hbox id="pageEditBoxTemplate">
+		<textbox multiline="true"
+			class="page-edit-box-main"
+			flex="1"
+			oninput="Presentation.onEditPage(Number(this.parentNode.parentNode.id.match(/\d+/)))"/>
+		<vbox>
+			<toolbarbutton label="×"
+				oncommand="Presentation.removePage(Number(this.parentNode.parentNode.id.match(/\d+/)));"/>
+		</vbox>
+
+	</hbox>
+</data>
+ 
+<broadcasterset> 
+	<broadcaster id="canBack"/>
+	<broadcaster id="canForward"/>
 </broadcasterset>
+ 
+<commandset> 
+	<command id="cmd_forward"
+		oncommand="if (Presentation.isPresentationMode) Presentation.forward();"/>
+	<command id="cmd_forwardStep"
+		oncommand="if (Presentation.isPresentationMode) Presentation.forwardStep();"/>
+	<command id="cmd_back"
+		oncommand="if (Presentation.isPresentationMode) Presentation.back();"/>
+	<command id="cmd_home"
+		oncommand="if (Presentation.isPresentationMode) Presentation.home();"/>
 
-<commandset>
- <command id="cmd_forward" oncommand="if (Sporx.isPresentationMode) Sporx.forward();"/>
- <command id="cmd_back" oncommand="if (Sporx.isPresentationMode) Sporx.back();"/>
- <command id="cmd_home" oncommand="if (Sporx.isPresentationMode) Sporx.home();"/>
- <command id="cmd_end" oncommand="if (Sporx.isPresentationMode) Sporx.end();"/>
+	<command id="cmd_end"
+		oncommand="if (Presentation.isPresentationMode) Presentation.end();"/>
 </commandset>
+ 
+<keyset> 
+	<key keycode="VK_ENTER"      command="cmd_forwardStep"/>
+	<key keycode="VK_RETURN"     command="cmd_forwardStep"/>
+	<key keycode="VK_PAGE_DOWN"  command="cmd_forwardStep"/>
+	<key keycode="VK_RIGHT"      command="cmd_forwardStep"/>
+	<key keycode="VK_DOWN"       command="cmd_forwardStep"/>
+	<!--key keycode="VK_BACK_SPACE" command="cmd_back"/-->
+	<key keycode="VK_PAGE_UP"    command="cmd_back"/>
 
-<keyset>
- <key key=" "                 command="cmd_forward"/>
- <key keycode="VK_ENTER"      command="cmd_forward"/>
- <key keycode="VK_RETURN"     command="cmd_forward"/>
- <key keycode="VK_PAGE_DOWN"  command="cmd_forward"/>
- <key keycode="VK_RIGHT"      command="cmd_forward"/>
- <key keycode="VK_DOWN"       command="cmd_forward"/>
- <!--key keycode="VK_BACK_SPACE" command="cmd_back"/-->
- <key keycode="VK_UP"         command="cmd_back"/>
- <key keycode="VK_PAGE_UP"    command="cmd_back"/>
- <!--<key keycode="VK_BACK_UP"    command="cmd_back"/>-->
- <!--<key keycode="VK_BACK_LEFT"  command="cmd_back"/>-->
- <key keycode="VK_HOME"       command="cmd_home"/>
- <!--<key keycode="VK_END"        command="cmd_end"/>-->
- <key key="n" modifiers="accel" oncommand="Sporx.addPage();"/>
- <key key="r" modifiers="accel" oncommand="window.location.reload();"/>
- <key key="e" modifiers="accel" oncommand="Sporx.toggleEditMode();"/>
- <key key="a" modifiers="accel" oncommand="Sporx.toggleEvaMode();"/>
+	<key keycode="VK_UP"         command="cmd_back"/>
+	<key keycode="VK_LEFT"       command="cmd_back"/>
+	<key keycode="VK_HOME"       command="cmd_home"/>
+	<key keycode="VK_END"        command="cmd_end"/>
+
+	<key id="key_insert_newpage"
+		key="n" modifiers="accel" oncommand="Presentation.insert('page');"/>
+
+	<key id="key_save"
+		key="s" modifiers="accel" oncommand="Presentation.output();"/>
+	<key id="key_reload"
+		key="r" modifiers="accel" oncommand="Presentation.reload();"/>
+	<key id="key_reload"
+		key="p" modifiers="accel" oncommand="Presentation.print();"/>
+
+	<key id="key_toggleEditMode"
+		key="e" modifiers="accel" oncommand="Presentation.toggleEditMode();"/>
+	<key id="key_toggleEvaMode"
+		key="e" modifiers="accel,shift" oncommand="Presentation.toggleEvaMode();"/>
+
+	<key id="key_plainText"
+		key="u" modifiers="accel" oncommand="Presentation.showPlainText();"/>
+	<key keycode="VK_ESCAPE"      oncommand="Presentation.hidePlainText();"/>
 </keyset>

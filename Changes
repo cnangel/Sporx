@@ -1,4 +1,14 @@
 ---
+version: 0.30
+date:    Sun 06 Sep 2009 10:27:58 PM CST
+changes: 
+- use takahashi for this UI.
+- add new script for translate ppt.
+- update style, template and javascript.
+version: 0.20
+date:    Sun 06 Sep 2009 08:16:02 PM CST
+changes:
+- add br and update js, template.
 version: 0.10
 date:    Mon Mar 27 06:04:00 PST 2006
 changes:
