@@ -1,4 +1,4 @@
-[%- DEFAULT css_location='css/sporx.css' -%]
+[%- DEFAULT css_location='css/cnangel.css' -%]
 [%- DEFAULT javascript_runtime='lib/sporx.js' -%]
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
