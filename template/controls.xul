@@ -287,7 +287,7 @@
 			flex="1"
 			oninput="Presentation.onEditPage(Number(this.parentNode.parentNode.id.match(/\d+/)))"/>
 		<vbox>
-			<toolbarbutton label="×"
+			<toolbarbutton label="x"
 				oncommand="Presentation.removePage(Number(this.parentNode.parentNode.id.match(/\d+/)));"/>
 		</vbox>
 
