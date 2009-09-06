@@ -1,4 +1,4 @@
 main_template: sporx.xul
 license_template: license.html
-css_location: css/sporx.css
+css_location: css/cnangel.css
 javascript_runtime: lib/sporx.js

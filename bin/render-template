@@ -28,3 +28,4 @@ $t->process($main_template, $data, \$result) or die $t->error;
 
 unlink($output_path);
 io($output_path)->print($result);
+
