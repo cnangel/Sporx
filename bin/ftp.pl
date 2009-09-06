@@ -13,7 +13,6 @@ use Pod::Usage;
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 use Conf::Libconfig;
-# use Net::FTP;
 use Net::FTP;
 
 my $man = 0;
@@ -82,19 +81,27 @@ print Dumper $rfiles;
 if ($rfiles && (scalar @$rfiles != 0 || ($action & 0x02) == 0x02)) 
 {
 	$ftp->cwd($remotedir) or die "Cannot change working directory ", $ftp->message;
+	$result .= "cd $remotedir\n";
 }
 if (($action & 0x04) == 0x04) 
 {
 	$localdir ? ($ftp->get($remotefile, $localdir) or die "get failed " . $ftp->message)
 		: ($ftp->get($remotefile) or die "get failed " . $ftp->message);
-	$result = "Download Successfully!\n";
+	$result .= "Download Successfully!\n";
 }
 if ($localfile && -f $localfile && ($action & 0x08) == 0x08) 
 {
 	$ftp->put($localfile) or die "put failed ", $ftp->message;
-	$result = "Upload Successfully!\n";
+	$result .= "Upload Successfully!\n";
 }
-print $ftp->pwd(), "\n" or die "Can't get current path", $ftp->message;
+if ($remotefile && ($action & 0x10) == 0x10)
+{
+	$ftp->delete($remotefile) or die "delete failed ", $ftp->message;
+	$rfiles = eval { $ftp->dir($remotedir) };
+	print Dumper $rfiles;
+	$result .= "Delete Successfully!\n";
+}
+$result .= 'PWD ' . $ftp->pwd() . "\n" or die "Can't get current path", $ftp->message;
 $ftp->quit ();
 
 print $result;
@@ -159,6 +166,7 @@ Ftp action which method do, define action as:
     # 0x02 : cd
     # 0x04 : get
     # 0x08 : put
+	# 0x16 : delete
 
 =item B<-t|--timeout>
 
