@@ -6,7 +6,7 @@
 	background: white !important;
 	color: black !important;
 	font-family:
-		/*
+	/*
 		"ゴシックMB101U"
 		"ニューセザンヌ-EB"
 		"セザンヌ-EB"
@@ -20,9 +20,10 @@
 		"DFPGothic EB"
 		"セイビイサラゴUB-P"
 		"AR Pゴシック体 S"
-		"Arphic PGothic SuperBold JIS" */
+		"Arphic PGothic SuperBold JIS"
+		*/
 /*		"Arial Black"*/
-		/*
+	/*
 		"ＤＦ特太ゴシック体"
 		"DFGothic EB"
 		"セイビイサラゴUB"
@@ -48,7 +49,6 @@
 		"Apple LiGothic"
 		"Arial Black"
 		"Bitstream Vera Sans"
-
 		sans-serif !important;
 }
 .em-text {
@@ -141,6 +141,11 @@ progressmeter .progress-remainder {
 	background: black !important;
 	color: white !important;
 	font-family:
+		"Georgia"
+		"DejaVu Serif Condensed"
+		"Apple LiGothic"
+		"Arial Black"
+		/*
 		"リュウミンU-KL"
 		"リュウミンH-KL"
 		"マティス-EB"
@@ -160,6 +165,7 @@ progressmeter .progress-remainder {
 		"HG平成明朝体W9"
 		"HGHeiseiMinchotaiW9"
 		"ヒラギノ明朝 Pro W6"
+		*/
 		serif !important;
 }
 #canvas[eva="true"] .em-text {
@@ -185,10 +191,6 @@ progressmeter .progress-remainder {
 #canvas[eva="true"] .monta-label {
 	background-color: black;
 }
-
-
-
-
 
 .stroke-dot {
 	background: red;
