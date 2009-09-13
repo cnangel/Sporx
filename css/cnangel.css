@@ -481,3 +481,34 @@ tabbox, tabpanels, tabpanel {
         padding-bottom: 8px;
         font-weight: bold;
 }
+.email  {
+		color: #F00D0F;
+        font-style: italic;
+        font-size: 40%;
+        text-decoration: underline;
+}
+.g {
+		color: #55ff55;
+		font-family : "Courier New";
+        font-size: medium;
+}
+.y {
+		color: #ffff55;
+		font-family : "Courier New";
+        font-size: medium;
+}
+.r {
+		color: #ff5555;
+		font-family : "Courier New";
+        font-size: medium;
+}
+.purple {
+		color: #ff55ff;
+		font-family : "Courier New";
+        font-size: medium;
+}
+.gray {
+		color: #bbbbbb;
+		font-family : "Courier New";
+        font-size: medium;
+}
