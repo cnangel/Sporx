@@ -17,13 +17,12 @@ align::left
 
 [[download|http://fans.huhoo.net/perlxs/perlxs.doc]]
 ----
-header::
-chapter::start write example 
-start
+header::Template Creating
+chapter::Template Creating
+Start
 ----
-header::Create a template
 align::left
-[[#v:$]][[#x:module-starter]] --module=perlxs::test -mi --author =Cnangel --email=junliang.li@alibaba-inc.com --license=GPLv3
+[[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel --email=junliang.li@alibaba-inc.com --license=GPLv3
 Created starter directories and files
 [[#v:$]][[#x:cd]] perlxs-test/
 [[#v:$]][[#x:ls]] -l
@@ -36,12 +35,11 @@ drwxrwxr-x 2 cnangel cnangel 4096 09-05 13:14 t
 -rw-rw-r-- 1 cnangel cnangel   92 09-05 13:14 MANIFEST
 [[#v:$]]
 ----
-chapter::You can use other tools for creating a template:
 use other tools 
 ----
 align::left
 [[#purple:1,]][[#g:h2xs]]
-[[#v:$]][[#x:h2xs]] -axc -n perlxs::test 
+[[#v:$]][[#ci:h2xs]] -axc -n perlxs::test 
 Defaulting to backwards compatibility with perl 5.10.0
 If you intend this module to be compatible with earlier perl versions, please specify a minimum perl version with the -b option.
 
@@ -59,7 +57,7 @@ Writing perlxs-test/MANIFEST
 ----
 align::left
 [[#purple:2,]][[#g:modulemaker]]
-|Feature|Detail|Current Value
+|~Feature|~Detail|~Current Value
 |N|Name of module|              ''
 |S|Abstract|                    'Module abstract (&#60;&#61; 44 characters) goes here'
 |A|Author information|
@@ -70,13 +68,300 @@ align::left
 |H|Generate module;save selections as defaults|
 |X|Exit immediately|
 ----
-header::Use XSub
-
-You must modify [[#x:lib/perlxs/test.pm]]
-
+header::XSub Using
+chapter::XSub Using
+You must modify [[#x:lib/perlxs/test.pm]],
+and use two methods for perl module.
+If you are a jackaroo of perl or a freshman,
+maybe be somethings are hard to understand,
+But i hope i make the best of the base design.
+the one method is perl module of function, 
+and other method with object oriented(OO).
 ----
-header::Modify Makefile.PL
+Function
 ----
+align::left
+[[#cm:# lib/perlxs/test.pm]]
+[[#kw:package]] perlxs::test;
+[[#cm:# use version, strict, warnings and define version]]
+...
+[[#kw:require]] Exporter;
+[[#kw:our]] [[#v:@ISA]] = [[#kw:qw]](Exporter);
+[[#kw:our]] [[#v:%EXPORT_TAGS]] = ( 'all' => [ qw(
+) ] );
+[[#kw:our]] [[#v:@EXPORT_OK]] = ( @{ [[#v:$EXPORT_TAGS]]{'all'} } );
+[[#kw:our]] [[#v:@EXPORT]] = [[#kw:qw]](
+				);
+...
+[[#kw:require]] XSLoader;
+XSLoader::load('perlxs::test', [[#v:$VERSION]]);
+[[#kw:sub]] fun1 {
+}
+...
+1;
+----
+Object Oriented
+----
+align::left
+[[#cm:# lib/perlxs/test.pm]]
+[[#kw:package]] perlxs::test;
+[[#cm:# use version, strict, warnings and define version]]
+...
+[[#kw:require]] XSLoader;
+XSLoader::load('perlxs::test', [[#v:$VERSION]]);
+
+[[#cm:# or make use of xsub itemself]]
+[[#kw:sub]] new {
+	[[#kw:my]] [[#v:$class]] = [[#kw:shift;]]
+	[[#kw:my]] [[#v:$self]] = {};
+	[[#kw:bless]] [[#v:$self]], [[#v:$class]];
+	[[#kw:return]] [[#v:$self;]]
+}
+...
+1;
+----
+header::Makefile.PL Editing 
+chapter::Makefile.PL Editing
+[[#cm:☺]] Now, we try to modify [[#x:Makefile.PL]] which is adapted to [[#i:C&amp;C++]] interface.
+----
+[[#pre:Package infomation]]
+|name|
+||all_from
+|abstract|abstract_from
+|author|author_from
+|version|version_from
+|license|license_from
+|perl_version|perl_version_from
+----
+[[#pre:Depend infomation]]
+|~function|~explain&amp;information|~function|~explain&amp;information
+|recommends| run which require module, but not must |requires| run which require module
+|test_requires| test which require module |configure_requires| configure which require module
+|requires_external_bin| run which require binary | |
+|cc_files|C&amp;C++ source files |cc_inc_paths| path which include header file(s)
+|cc_lib_paths| path which include library file(s) |cc_lib_links| name which is library file(s)
+|cc_optimize_flags| optimize flags |can_use|
+|can_run| |can_cc|
+----
+[[#pre:Depend package checking]]
+|~Module name|~function|~example
+|Devel::CheckLib|check_lib_or_exit|check_lib_or_exit( lib => [ 'log4cpp', 'libconfig' ], header => 'libconfig.h' );
+|Module::Install::CheckLib|checklibs|checklibs lib => [ 'log4cpp', 'libconfig' ], header => 'libconfig.h';
+----
+[[#pre:Package install information]]
+|install_script
+|installdirs, install_as_*
+|no_index
+|WriteAll
+----
+align::left
+[[#v:$]][[#ci:cat]] Makefile.PL
+[[pre:
+use strict;
+use lib '.';
+use inc::Module::Install;
+name                    'perlxs-test';
+all_from                'lib/perlxs/test.pm';
+author                  'Cnangel &#60;junliang.li&#64;alibaba-inc.com&#62;';
+license                 'GPL';
+requires                'File::Find' => 1.00;
+requires                'Conf::Libconfig' => 0.010;
+test_requires   'Test::Exception' => 0.27;
+test_requires   'Test::Deep' => 0.103;
+checklibs               lib => [qw(config)], header => [qw(libconfig.h)];
+cc_inc_paths    '/usr/include', '/usr/local/include';
+cc_lib_paths    '/usr/lib' , '/usr/lib64', '/usr/local/lib', '/usr/local/lib64';
+cc_lib_links    'config';
+can_cc                  or die 'This module requires C compiler.';
+no_index                directory => qw(t inc);
+auto_install();
+WriteAll();
+]]
+----
+header::XSub building
+chapter::XSub building
+align::left
+Then, you can get standard template from h2xs or manual. [[#cm:^_-]]
+----
+align::left
+[[#v:$]][[#ci:vim]] test.xs
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+
+
+[[#y:MODULE]] [[#gray:= perlxs::test]]           [[#y:PACKAGE]] [[#gray:= perlxs::test]]
+[[#v:$]]
+----
+align::left
+Now, let 's add some contents to our XSub.
+If i have a C header file(mycase.h), a C source file(mycase.c), like this:
 ➥
 ----
+align::left
+[[#v:$]][[#ci:vim]] mycase.c
+[[pre:
+int mylc(char *str, size_t strLen)
+{
+	if (strLen == 0) return 1;
+	int i = 0;
+	for (; i &#60; strLen; i++) { if (str[i] &#62;= 'A' &amp;&amp; str[i] &#60;= 'Z') { str[i] = str[i] + ' '; } }
+	return 0;
+}
+int myuc(char *str, size_t strLen)
+{
+	if (strLen == 0) return 1;
+	int i = 0;
+	for (; i &#60; strLen; i++) { if (str[i] &#62;= 'a' &amp;&amp; str[i] &#60;= 'z') { str[i] = str[i] - ' '; } }
+	return 0;
+}
+]]
+[[#v:$]]
+----
+align::left
+[[#v:$]][[#ci:vim]] mycase.h
+[[pre:
+extern int mylc(char *str, size_t strLen);
+extern int myuc(char *str, size_t strLen);
+]]
+[[#v:$]]
+----
+align::left
+[[#v:$]][[#ci:vim]] test.xs
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+
+[#include "mycase.h"]
+
+[[#y:MODULE]] [[#gray:= perlxs::test]]           [[#y:PACKAGE]] [[#gray:= perlxs::test]]        [PREFIX = perlxs_]
+----
+align::left
+[[pre:
+MODULE = perlxs::test           PACKAGE = perlxs::test        PREFIX = perlxs_
+SV *
+perlxs_mylc(str)
+	char *str
+	PPCODE:
+	{
+		if (str) {
+			mylc(str, strlen(str));
+		}
+		EXTEND(SP, 1);
+		PUSHs(sv_2mortal(newSVpvn(str, strlen(str))));
+	}
+SV *
+perlxs_myuc(str)
+	char *str
+	PREINIT:
+		SV *sv;
+	CODE:
+		if (str) {
+			myuc(str, strlen(str));
+			sv = sv_2mortal(newSVpvn(str, strlen(str)));
+		} else
+			sv = sv_2mortal(newSV(0));
+		RETVAL = sv;
+	OUTPUT:
+		RETVAL
+]]
+[[#v:$]]
+----
+[[#cm:☼]] Finally, you can try to make Makefile or Build.
+[[pre:
+perl Makefile.PL
+(or perl Build.PL)
+make
+make test
+make install
+]]
+----
+header::For C++
+chapter::For C++
+[[#pre:Some different with C language.]]If i have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
+[[#cm:@_-]] In here, i don't implement method in cpp file, you can try it.
+➥
+----
+[[#v:$]][[#ci:vim]] mycase++.h
+[[pre:
+namespace goods {
+class Goods {
+public:
+	Goods();
+	~Goods();
+public:
+	add(int goodid);
+	update(int goodid);
+	drop(int goodid);
+};
+};
+]]
+----
+align::left
+[[#v:$]][[#ci:vim]] test.xs
+[#ifdef __cplusplus]
+[extern "C" {]
+[#endif]
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+[#ifdef __cplusplus]
+[}]
+[#endif]
+
+[#include "mycase++.h"]
+[using namespace goods;]
+
+[[#y:MODULE]] [[#gray:= China::Goods]]           [[#y:PACKAGE]] [[#gray:= China::Goods]]     
+----
+[[#pre:CONSTRUCT]]
+[[pre:
+Goods *
+Goods::new(const char *cfgfile)
+]]
+----
+[[#pre:TYPEMAP]]
+[[pre:
+TYPEMAP
+Goods *		O_OBJECT
+]]
+----
+[[#pre:OVERLOAD]]
+[[pre:
+int
+Goods::add(int goodsid)
+int
+Goods::update(int goodsid)
+int
+Goods::drop(int goodsid)
+]]
+----
+[[#pre:DESTRUCTOR]]
+[[pre:
+void
+Goods::DESTROY()
+]]
+----
+header::Useful Links
+chapter::Useful Links
+[[http://perldoc.perl.org/perlapi.html]]
+[[http://perldoc.perl.org/perlxs.html]]
+[[http://search.cpan.org/~cnangel/getaddress-0.02/]]
+[[http://search.cpan.org/~cnangel/Conf-Libconfig-0.014/]]
+[[http://my.huhoo.net/study/]]
+----
+[[http://perlchina.org/]]
+[[http://www.movabletype.org/]]
+[[http://www.twiki.org/]]
+[[https://github.com/]]
+----
+header::
+chapter::
+END
 ☻
