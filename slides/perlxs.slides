@@ -25,36 +25,39 @@ You can create a template with module-starter tool.
 ----
 align::left
 [[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel --email=junliang.li@alibaba-inc.com --license=GPLv3
-Created starter directories and files
+[[#gray:Created starter directories and files]]
 [[#v:$]][[#x:cd]] perlxs-test/
 [[#v:$]][[#x:ls]] -l
-total 24
-drwxrwxr-x 3 cnangel cnangel 4096 09-05 13:14 lib
-drwxrwxr-x 2 cnangel cnangel 4096 09-05 13:14 t
--rw-rw-r-- 1 cnangel cnangel  196 09-05 13:14 Makefile.PL
--rw-rw-r-- 1 cnangel cnangel  111 09-05 13:14 Changes
--rw-rw-r-- 1 cnangel cnangel 1344 09-05 13:14 README
--rw-rw-r-- 1 cnangel cnangel   92 09-05 13:14 MANIFEST
+[[#gray:total 24]]
+[[#gray:drwxrwxr-x 3 cnangel cnangel 4096 09-05 13:14 lib]]
+[[#gray:drwxrwxr-x 2 cnangel cnangel 4096 09-05 13:14 t]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel  196 09-05 13:14 Makefile.PL]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel  111 09-05 13:14 Changes]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel 1344 09-05 13:14 README]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel   92 09-05 13:14 MANIFEST]]
 [[#v:$]]
 ----
 You can use other tools for creating a template as well.
 ----
 align::left
+
+
 [[#purple:1,]][[#g:h2xs]]
 [[#v:$]][[#ci:h2xs]] -axc -n perlxs::test 
-Defaulting to backwards compatibility with perl 5.10.0
-If you intend this module to be compatible with earlier perl versions, please specify a minimum perl version with the -b option.
+[[#gray:Defaulting to backwards compatibility with perl 5.10.0]]
+[[#gray:If you intend this module to be compatible with earlier perl versions,]]
+[[#gray:please specify a minimum perl version with the -b option.]]
 
-Writing perlxs-test/ppport.h
-Scanning typemaps...
- Scanning /usr/lib/perl5/5.10.0/ExtUtils/typemap
-Writing perlxs-test/lib/perlxs/test.pm
-Writing perlxs-test/test.xs
-Writing perlxs-test/Makefile.PL
-Writing perlxs-test/README
-Writing perlxs-test/t/perlxs-test.t
-Writing perlxs-test/Changes
-Writing perlxs-test/MANIFEST
+[[#gray:Writing perlxs-test/ppport.h]]
+[[#gray:Scanning typemaps...]]
+[[#gray: Scanning /usr/lib/perl5/5.10.0/ExtUtils/typemap]]
+[[#gray:Writing perlxs-test/lib/perlxs/test.pm]]
+[[#purple:Writing perlxs-test/test.xs]]
+[[#gray:Writing perlxs-test/Makefile.PL]]
+[[#gray:Writing perlxs-test/README]]
+[[#gray:Writing perlxs-test/t/perlxs-test.t]]
+[[#gray:Writing perlxs-test/Changes]]
+[[#gray:Writing perlxs-test/MANIFEST]]
 [[#v:$]]
 ----
 align::left
