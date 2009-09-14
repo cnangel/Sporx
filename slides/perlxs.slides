@@ -10,7 +10,7 @@ Introduction to ☺[[#c:PerlXS]]☺
 header::Unabridged document
 align::left
 
-[[#x:* What do you known firstly]]
+[[#x:* What should you know first?]]
 [[#x:* Perlguts &amp; Perlapi]]
 [[#x:* How to write perl extension]]
 [[#x:* The end]]
@@ -20,6 +20,8 @@ align::left
 header::Template Creating
 chapter::Template Creating
 Start
+----
+You can create a template with module-starter tool.
 ----
 align::left
 [[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel --email=junliang.li@alibaba-inc.com --license=GPLv3
@@ -35,7 +37,7 @@ drwxrwxr-x 2 cnangel cnangel 4096 09-05 13:14 t
 -rw-rw-r-- 1 cnangel cnangel   92 09-05 13:14 MANIFEST
 [[#v:$]]
 ----
-use other tools 
+you also use other tools for creating a template. 
 ----
 align::left
 [[#purple:1,]][[#g:h2xs]]
@@ -348,14 +350,32 @@ void
 Goods::DESTROY()
 ]]
 ----
+Well, no farther, i hope two example could help you write perl extension.
+Of course, you must do more exercise and get further experience.
+You will have the pleasure of getting to perl kernel or perl core.
+----
+header::The conclusion
+chapter::The conclusion
+align::left
+It is [[em:faster]] using c than using pure perl.
+Borrow frames of C/C++, it is [[em:simple]] doing dotings.
+As CGI or mod_perl, if using perl extension, your system will be from [[em:strength]] to [[em:strength]].
+To combine Linix or Unix, perl extension use [[em:widely]] all over the world.
+----
+Glue language
+Just another Perl hacker
+Regular Expressions
+----
 header::Useful Links
 chapter::Useful Links
+align:left
 [[http://perldoc.perl.org/perlapi.html]]
 [[http://perldoc.perl.org/perlxs.html]]
 [[http://search.cpan.org/~cnangel/getaddress-0.02/]]
 [[http://search.cpan.org/~cnangel/Conf-Libconfig-0.014/]]
 [[http://my.huhoo.net/study/]]
 ----
+align:left
 [[http://perlchina.org/]]
 [[http://www.movabletype.org/]]
 [[http://www.twiki.org/]]
