@@ -83,6 +83,7 @@ and other method with object oriented(OO).
 Function
 ----
 align::left
+
 [[#cm:# lib/perlxs/test.pm]]
 [[#kw:package]] perlxs::test;
 [[#cm:# use version, strict, warnings and define version]]
@@ -105,6 +106,7 @@ XSLoader::load('perlxs::test', [[#v:$VERSION]]);
 Object Oriented
 ----
 align::left
+
 [[#cm:# lib/perlxs/test.pm]]
 [[#kw:package]] perlxs::test;
 [[#cm:# use version, strict, warnings and define version]]
@@ -170,10 +172,10 @@ requires                'File::Find' => 1.00;
 requires                'Conf::Libconfig' => 0.010;
 test_requires   'Test::Exception' => 0.27;
 test_requires   'Test::Deep' => 0.103;
-checklibs               lib => [qw(config)], header => [qw(libconfig.h)];
-cc_inc_paths    '/usr/include', '/usr/local/include';
-cc_lib_paths    '/usr/lib' , '/usr/lib64', '/usr/local/lib', '/usr/local/lib64';
-cc_lib_links    'config';
+checklibs               lib => [qw(config mycase)], header => [qw(libconfig.h mycase.h)];
+cc_inc_paths    '.', '/usr/include', '/usr/local/include';
+cc_lib_paths    '.', '/usr/lib' , '/usr/lib64', '/usr/local/lib', '/usr/local/lib64';
+cc_lib_links    'config', 'mycase';
 can_cc                  or die 'This module requires C compiler.';
 no_index                directory => qw(t inc);
 auto_install();
@@ -284,7 +286,8 @@ make install
 ----
 header::For C++
 chapter::For C++
-[[#pre:Some different with C language.]]If i have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
+[[#pre:Some different with C language.]]
+If i have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
 [[#cm:@_-]] In here, i don't implement method in cpp file, you can try it.
 ➥
 ----
@@ -368,14 +371,14 @@ Regular Expressions
 ----
 header::Useful Links
 chapter::Useful Links
-align:left
+align::left
 [[http://perldoc.perl.org/perlapi.html]]
 [[http://perldoc.perl.org/perlxs.html]]
 [[http://search.cpan.org/~cnangel/getaddress-0.02/]]
 [[http://search.cpan.org/~cnangel/Conf-Libconfig-0.014/]]
 [[http://my.huhoo.net/study/]]
 ----
-align:left
+align::left
 [[http://perlchina.org/]]
 [[http://www.movabletype.org/]]
 [[http://www.twiki.org/]]
