@@ -182,8 +182,8 @@ auto_install();
 WriteAll();
 ]]
 ----
-header::XSub building
-chapter::XSub building
+header::XSub Building
+chapter::XSub Building
 align::left
 Then, you can get standard template from h2xs or manual. [[#cm:^_-]]
 ----
@@ -357,8 +357,8 @@ Well, no farther, i hope two example could help you write perl extension.
 Of course, you must do more exercise and get further experience.
 You will have the pleasure of getting to perl kernel or perl core.
 ----
-header::The conclusion
-chapter::The conclusion
+header::The Conclusion
+chapter::The Conclusion
 align::left
 It is [[em:faster]] using c than using pure perl.
 Borrow frames of C/C++, it is [[em:simple]] doing dotings.
