@@ -65,7 +65,7 @@ align::left
 ----
 align::left
 [[#purple:2,]][[#g:modulemaker]]
-The order prompts you do next step, There is lots of options which help you.
+Tips with many options will appear after the command run ,and you can follow them to next steps.
 |~Feature|~Detail|~Current Value
 |N|Name of module|              ''
 |S|Abstract|                    'Module abstract (&#60;&#61; 44 characters) goes here'
@@ -79,10 +79,14 @@ The order prompts you do next step, There is lots of options which help you.
 ----
 header::XSub Using
 chapter::XSub Using
-There are tow patterns you can use to design the perl module: ([[#x:lib/perlxs/test.pm]])
+There are tow patterns you can use to design the perl module: 
+([[#x:lib/perlxs/test.pm]])
 One is Function Pattern;
-the other is Object Oriented Pattern. 
-If you are intersted, you can try to learn how it works and get them, and it will be rewarding. 
+The other is Object Oriented Pattern. 
+
+If you are intersted,
+you can try to learn how they work and get them,
+and this will be rewarding. 
 ----
 Function
 ----
@@ -130,16 +134,16 @@ XSLoader::load('perlxs::test', [[#v:$VERSION]]);
 ----
 header::Makefile.PL Editing 
 chapter::Makefile.PL Editing
-[[#cm:☺]] Now, let's try to modify [[#x:Makefile.PL]] which is adapted to [[#i:C&amp;C++]] interface.
+[[#cm:☺]] Now, let's make some change with [[#x:Makefile.PL]] so it will be adapted to [[#i:c/c++]] interface.
 ----
 [[#pre:Package infomation]]
-We can use some methods to describe package information, and [[#r:*_from]] means infomation from pod file.
+There are some ways of describing the packge information. For example, "*_from" means the information is from Pod file.
 |name											`|
 ||all_from
 |abstract										`|abstract_from
 |author											`|author_from
-|version										`|version_from
-|license										`|license_from
+|version											`|version_from
+|license											`|license_from
 |perl_version										`|perl_version_from
 ----
 [[#pre:Depend infomation]]
@@ -196,7 +200,7 @@ WriteAll();
 header::XSub Building
 chapter::XSub Building
 align::left
-Then, you can get standard template from h2xs or manual. [[#cm:^_-]]
+Then, you can exact h2xs or use manual to get a standard template. [[#cm:^_-]]
 ----
 align::left
 [[#v:$]][[#ci:vim]] test.xs
@@ -211,8 +215,8 @@ align::left
 [[#v:$]]
 ----
 align::left
-Now, let 's add some contents to our XSub.
-If i have a C header file(mycase.h), a C source file(mycase.c), like this:
+Now, let's add something to our XSub. 
+In this case, we have a C header file(mycase.h), a C source file(mycase.c), like this:
 ➥
 ----
 align::left
@@ -292,18 +296,18 @@ perlxs_myuc(str)
 ]]
 [[#v:$]]
 ----
+align::left
 [[#cm:☼]] Finally, you can try to make Makefile or Build.
-[[pre:
-perl Makefile.PL
-(or perl Build.PL)
-make
-make test
-make install
-]]
+
+[perl Makefile.PL]
+[(or perl Build.PL)]
+[make]
+[make test]
+[make install]
 ----
 header::Perl Datatypes
 chapter::Perl Datatypes
-Perl has three typedefs that handle Perl' s three main data types.
+Perl has three typedefs which handle Perl' s three main data types.
 [[pre:
 SV: Scalar Value
 AV: Array Value
@@ -312,8 +316,8 @@ HV: Hash Value
 ----
 header::For C++
 chapter::For C++
-[[#pre:Some different with C language.]]
-If i have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
+[[#pre:Diffrences with C language.]]
+If we have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
 [[#cm:@_-]] In here, i don't implement method in cpp file, you can try it.
 ➥
 ----
