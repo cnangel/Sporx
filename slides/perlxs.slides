@@ -216,7 +216,7 @@ align::left
 ----
 align::left
 Now, let's add something to our XSub. 
-In this case, we have a C header file(mycase.h), a C source file(mycase.c), like this:
+In this case, we have a c header file([[#x:mycase.h]]) and a c source file([[#x:mycase.c]]), like this:
 ➥
 ----
 align::left
@@ -383,17 +383,18 @@ void
 Goods::DESTROY()
 ]]
 ----
-Well, no farther, i hope two example could help you write perl extension.
-Of course, you must do more exercise and get further experience.
+Well, I have show you the two patterns of writing Perl extension. 
+I hope you can use them to write a simple Perl extension now.
+Of course, you have to practice more to get a deep understanding of Perl extension.  
 You will have the pleasure of getting to perl kernel or perl core.
 ----
 header::The Conclusion
 chapter::The Conclusion
 align::left
-It is [[em:faster]] using c than using pure perl.
-Borrow frames of C/C++, it is [[em:simple]] doing dotings.
-As CGI or mod_perl, if using perl extension, your system will be from [[em:strength]] to [[em:strength]].
-To combine Linix or Unix, perl extension use [[em:widely]] all over the world.
+It is [[em:faster]] using perl extension with c than using pure perl.
+perl extension with c/c++ frame can do many things in a [[em:simple]] way. 
+Using Perl extension in CGI or mod_perl will make your system more [[em:stronger]]. 
+Combined with UNIX and Linux system, perl extension is [[em:widely]] used all over the world. 
 ----
 Glue language
 Just another Perl hacker
