@@ -383,7 +383,7 @@ void
 Goods::DESTROY()
 ]]
 ----
-Well, I have show you the two patterns of writing Perl extension. 
+Well, I have show you the [[em:two patterns of writing Perl extension]]. 
 I hope you can use them to write a simple Perl extension now.
 Of course, you have to practice more to get a deep understanding of Perl extension.  
 You will have the pleasure of getting to perl kernel or perl core.
@@ -419,3 +419,6 @@ header::
 chapter::
 END
 ☻
+----
+☺
+[[#kw:FAQ]]
