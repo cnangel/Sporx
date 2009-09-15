@@ -24,7 +24,10 @@ Start
 You can create a template with module-starter tool.
 ----
 align::left
-[[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel --email=junliang.li@alibaba-inc.com --license=GPLv3
+
+
+[[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel \
+--email=junliang.li@alibaba-inc.com --license=GPLv3
 [[#gray:Created starter directories and files]]
 [[#v:$]][[#x:cd]] perlxs-test/
 [[#v:$]][[#x:ls]] -l
@@ -62,6 +65,7 @@ align::left
 ----
 align::left
 [[#purple:2,]][[#g:modulemaker]]
+The order prompts you do next step, There is lots of options which help you.
 |~Feature|~Detail|~Current Value
 |N|Name of module|              ''
 |S|Abstract|                    'Module abstract (&#60;&#61; 44 characters) goes here'
@@ -132,13 +136,14 @@ chapter::Makefile.PL Editing
 [[#cm:☺]] Now, we try to modify [[#x:Makefile.PL]] which is adapted to [[#i:C&amp;C++]] interface.
 ----
 [[#pre:Package infomation]]
-|name|
+We can use some methods to describe package information, and [[#r:*_from]] means infomation from pod file.
+|name											`|
 ||all_from
-|abstract|abstract_from
-|author|author_from
-|version|version_from
-|license|license_from
-|perl_version|perl_version_from
+|abstract										`|abstract_from
+|author											`|author_from
+|version										`|version_from
+|license										`|license_from
+|perl_version										`|perl_version_from
 ----
 [[#pre:Depend infomation]]
 |~function|~explain&amp;information|~function|~explain&amp;information
@@ -156,10 +161,10 @@ chapter::Makefile.PL Editing
 |Module::Install::CheckLib|checklibs|checklibs lib => [ 'log4cpp', 'libconfig' ], header => 'libconfig.h';
 ----
 [[#pre:Package install information]]
-|install_script
-|installdirs, install_as_*
-|no_index
-|WriteAll
+|install_script| binary
+|installdirs, install_as_*|install path or method
+|no_index|
+|WriteAll| write makefile or build
 ----
 align::left
 [[#v:$]][[#ci:cat]] Makefile.PL
@@ -173,6 +178,12 @@ author                  'Cnangel &#60;junliang.li&#64;alibaba-inc.com&#62;';
 license                 'GPL';
 requires                'File::Find' => 1.00;
 requires                'Conf::Libconfig' => 0.010;
+test_requires   'Test::Exception' => 0.27;
+test_requires   'Test::Deep' => 0.103;
+]]
+----
+[[pre:
+...
 test_requires   'Test::Exception' => 0.27;
 test_requires   'Test::Deep' => 0.103;
 checklibs               lib => [qw(config mycase)], header => [qw(libconfig.h mycase.h)];
@@ -208,7 +219,7 @@ If i have a C header file(mycase.h), a C source file(mycase.c), like this:
 ➥
 ----
 align::left
-[[#v:$]][[#ci:vim]] mycase.c
+[[#v:$]][[#ci:cat]] mycase.c
 [[pre:
 int mylc(char *str, size_t strLen)
 {
@@ -228,7 +239,7 @@ int myuc(char *str, size_t strLen)
 [[#v:$]]
 ----
 align::left
-[[#v:$]][[#ci:vim]] mycase.h
+[[#v:$]][[#ci:cat]] mycase.h
 [[pre:
 extern int mylc(char *str, size_t strLen);
 extern int myuc(char *str, size_t strLen);
@@ -236,7 +247,7 @@ extern int myuc(char *str, size_t strLen);
 [[#v:$]]
 ----
 align::left
-[[#v:$]][[#ci:vim]] test.xs
+[[#v:$]][[#ci:more]] test.xs
 [[#g:#include]] [[#r:"EXTERN.h"]]
 [[#g:#include]] [[#r:"perl.h"]]
 [[#g:#include]] [[#r:"XSUB.h"]]
@@ -248,6 +259,7 @@ align::left
 [[#y:MODULE]] [[#gray:= perlxs::test]]           [[#y:PACKAGE]] [[#gray:= perlxs::test]]        [PREFIX = perlxs_]
 ----
 align::left
+[[#v:$]][[#ci:more]] test.xs
 [[pre:
 MODULE = perlxs::test           PACKAGE = perlxs::test        PREFIX = perlxs_
 SV *
@@ -261,6 +273,11 @@ perlxs_mylc(str)
 		EXTEND(SP, 1);
 		PUSHs(sv_2mortal(newSVpvn(str, strlen(str))));
 	}
+]]
+----
+align::left
+[[#v:$]][[#ci:more]] test.xs
+[[pre:
 SV *
 perlxs_myuc(str)
 	char *str
@@ -287,6 +304,15 @@ make test
 make install
 ]]
 ----
+header::Perl Datatypes
+chapter::Perl Datatypes
+Perl has three typedefs that handle Perl' s three main data types.
+[[pre:
+SV: Scalar Value
+AV: Array Value
+HV: Hash Value
+]]
+----
 header::For C++
 chapter::For C++
 [[#pre:Some different with C language.]]
@@ -294,7 +320,7 @@ If i have a C++ header file(mycase++.h), a cpp source file(mycase.cpp)
 [[#cm:@_-]] In here, i don't implement method in cpp file, you can try it.
 ➥
 ----
-[[#v:$]][[#ci:vim]] mycase++.h
+[[#v:$]][[#ci:cat]] mycase++.h
 [[pre:
 namespace goods {
 class Goods {
