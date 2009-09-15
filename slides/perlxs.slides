@@ -79,13 +79,10 @@ The order prompts you do next step, There is lots of options which help you.
 ----
 header::XSub Using
 chapter::XSub Using
-You must modify [[#x:lib/perlxs/test.pm]],
-and use two methods for perl module.
-If you are a jackaroo of perl or a freshman,
-maybe be somethings are hard to understand,
-But i hope i make the best of the base design.
-the one method is perl module of function, 
-and other method with object oriented(OO).
+There are tow patterns you can use to design the perl module: ([[#x:lib/perlxs/test.pm]])
+One is Function Pattern;
+the other is Object Oriented Pattern. 
+If you are intersted, you can try to learn how it works and get them, and it will be rewarding. 
 ----
 Function
 ----
@@ -133,7 +130,7 @@ XSLoader::load('perlxs::test', [[#v:$VERSION]]);
 ----
 header::Makefile.PL Editing 
 chapter::Makefile.PL Editing
-[[#cm:☺]] Now, we try to modify [[#x:Makefile.PL]] which is adapted to [[#i:C&amp;C++]] interface.
+[[#cm:☺]] Now, let's try to modify [[#x:Makefile.PL]] which is adapted to [[#i:C&amp;C++]] interface.
 ----
 [[#pre:Package infomation]]
 We can use some methods to describe package information, and [[#r:*_from]] means infomation from pod file.
