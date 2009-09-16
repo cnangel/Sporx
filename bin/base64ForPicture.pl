@@ -13,7 +13,6 @@ use Pod::Usage;
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 use Conf::Libconfig;
-use Net::FTP;
 
 my $man = 0;
 my $help = 0;
