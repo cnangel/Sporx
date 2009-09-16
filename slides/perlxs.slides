@@ -317,8 +317,9 @@ HV: Hash Value
 header::For C++
 chapter::For C++
 [[#pre:Diffrences with C language.]]
-If we have a C++ header file(mycase++.h), a cpp source file(mycase.cpp) 
-[[#cm:@_-]] In here, i don't implement method in cpp file, you can try it.
+For example, I have a c++ header file ([[#x:mycase++.h]]) and a c++ source file ([[#x:mycase.cpp]]).
+[[#cm:@_-]][[#r:Note:]]
+Here, I' ll give the .h file. the .cpp file will not be posted for space saving.
 ➥
 ----
 [[#v:$]][[#ci:cat]] mycase++.h
