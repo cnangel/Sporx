@@ -307,12 +307,145 @@ align::left
 ----
 header::Perl Datatypes
 chapter::Perl Datatypes
-Perl has three typedefs which handle Perl' s three main data types.
+Perl has three typedefs which handle Perl' s [[em:three main data types]].
+|SV|Scalar Value
+|AV|Array Value
+|HV|Hash Value
+----
+[[#pre:Other Datatypes]]
+|IV|integer variables
+|UV|unsigned integer variables
+|I32|32-bits integer
+|U32|unsigned 32-bits integer
+|I16|16-bits integer
+|U16|unsigned 16-bits integer
+|NV|double variables
+|PV|string variables
+----
+SV
+----
+[[#kw:☼]][[#pre:SV: Create]]
 [[pre:
-SV: Scalar Value
-AV: Array Value
-HV: Hash Value
+SV* newSV();
 ]]
+----
+[[#kw:☼]][[#pre:SV: Apply]]
+[[pre:
+SV*  newSViv(IV);
+SV*  newSVuv(UV);
+SV*  newSVnv(double);
+SV*  newSVpv(const char*, STRLEN);
+SV*  newSVpvn(const char*, STRLEN);
+SV*  newSVpvf(const char*, ...);
+SV*  newSVsv(SV*);
+]]
+----
+[[#kw:☼]][[#pre:SV: Modify]]
+[[pre:
+void  sv_setiv(SV*, IV);
+void  sv_setuv(SV*, UV);
+void  sv_setnv(SV*, double);
+void  sv_setpv(SV*, const char*);
+void  sv_setpvn(SV*, const char*, STRLEN);
+void  sv_setpvf(SV*, const char*, ...);
+void  sv_vsetpvfn(SV*, const char*, STRLEN, va_list *, SV **, I32, bool *);
+void  sv_setsv(SV*, SV*);
+]]
+----
+[[#kw:☼]][[#pre:SV: Access Actual Value]]
+[[pre:
+SvIV(SV*)
+SvUV(SV*)
+SvNV(SV*)
+SvPV(SV*, STRLEN len)
+SvPV_nolen(SV*)
+]]
+----
+[[#kw:☼]][[#pre:SV: Append]]
+[[pre:
+void  sv_catpv(SV*, const char*);
+void  sv_catpvn(SV*, const char*, STRLEN);
+void  sv_catpvf(SV*, const char*, ...);
+void  sv_vcatpvfn(SV*, const char*, STRLEN, va_list *, SV **, I32, bool);
+void  sv_catsv(SV*, SV*);
+]]
+----
+AV
+----
+[[#kw:☼]][[#pre:AV: Create]]
+[[pre:
+AV*  newAV();
+AV*  av_make(I32 num, SV **ptr);
+]]
+----
+[[#kw:☼]][[#pre:AV: Operations]]
+[[pre:
+void  av_push(AV*, SV*);
+SV*   av_pop(AV*);
+SV*   av_shift(AV*);
+void  av_unshift(AV*, I32 num);
+]]
+----
+[[#kw:☼]][[#pre:AV: Other Functions]]
+[[pre:
+I32   av_len(AV*);
+SV**  av_fetch(AV*, I32 key, I32 lval);
+SV**  av_store(AV*, I32 key, SV* val);
+void  av_clear(AV*);
+void  av_undef(AV*);
+void  av_extend(AV*, I32 key);
+]]
+----
+HV
+----
+[[#kw:☼]][[#pre:HV: Create]]
+[[pre:
+HV*  newHV();
+]]
+----
+[[#kw:☼]][[#pre:HV: Operations]]
+[[pre:
+SV**  hv_store(HV*, const char* key, U32 klen, SV* val, U32 hash);
+SV**  hv_fetch(HV*, const char* key, U32 klen, I32 lval);
+]]
+----
+[[#kw:☼]][[#pre:HV: Other Functions]]
+[[pre:
+bool  hv_exists(HV*, const char* key, U32 klen);
+SV*   hv_delete(HV*, const char* key, U32 klen, I32 flags);
+void   hv_clear(HV*);
+void   hv_undef(HV*);
+]]
+----
+[[#kw:☼]][[#pre:HV: HE]]
+Perl keeps the actual data in linked list of structures with a typedef of HE. 
+These contain the actual key and value pointers.
+The key is a string pointer; the value is an "SV*". 
+However, once you have an "HE*", to get the actual key and value, 
+use the routines specified below.
+[[pre:
+I32    hv_iterinit(HV*);
+HE*    hv_iternext(HV*);
+char*  hv_iterkey(HE* entry, I32* retlen);
+SV*    hv_iterval(HV*, HE* entry);
+SV*    hv_iternextsv(HV*, char** key, I32* retlen);
+]]
+----
+Hash Extensions have lots of APIs.
+If you are interest in HE, you can use [[em:perldoc perlguts]].
+----
+RV
+----
+A special type of scalar.
+----
+[[#kw:☼]][[#pre:RV: Create]]
+[[pre:
+SV* newRV_inc((SV*) thing);
+SV* newRV_noinc((SV*) thing);
+]]
+----
+RV is very important. Remember it. 
+Now, let's start Journey of writing perl extension with c++ language. 
 ----
 header::For C++
 chapter::For C++
