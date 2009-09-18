@@ -419,7 +419,7 @@ void   hv_undef(HV*);
 ----
 [[#kw:☼]][[#pre:HV: HE]]
 Perl keeps the actual data in linked list of structures with a typedef of HE. 
-These contain the actual key and value pointers.
+These structures contain the actual key and value pointers.
 The key is a string pointer; the value is an "SV*". 
 However, once you have an "HE*", to get the actual key and value, 
 use the routines specified below.
@@ -445,7 +445,7 @@ SV* newRV_noinc((SV*) thing);
 ]]
 ----
 RV is very important. Remember it. 
-Now, let's start Journey of writing perl extension with c++ language. 
+Now, let's start our journey of writing perl extension with c++ language. 
 ----
 header::For C++
 chapter::For C++
@@ -519,7 +519,7 @@ Goods::DESTROY()
 ----
 Well, I have show you the [[em:two patterns of writing Perl extension]]. 
 I hope you can use them to write a simple Perl extension now.
-Of course, you have to practice more to get a deep understanding of Perl extension.  
+Of course, you have to practise more to get a deep understanding of Perl extension.  
 You will have the pleasure of getting to perl kernel or perl core.
 ----
 header::The Conclusion
@@ -531,8 +531,6 @@ Using Perl extension in CGI or mod_perl will make your system more [[em:stronger
 Combined with UNIX and Linux system, perl extension is [[em:widely]] used all over the world. 
 ----
 Glue language
-Just another Perl hacker
-Regular Expressions
 ----
 header::Useful Links
 chapter::Useful Links
