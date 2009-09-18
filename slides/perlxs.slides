@@ -200,7 +200,7 @@ WriteAll();
 header::XSub Building
 chapter::XSub Building
 align::left
-Then, you can exact h2xs or use manual to get a standard template. [[#cm:^_-]]
+Then, you can execute h2xs or use manual to get a standard template. [[#cm:^_-]]
 ----
 align::left
 [[#v:$]][[#ci:vim]] test.xs
@@ -432,7 +432,7 @@ SV*    hv_iternextsv(HV*, char** key, I32* retlen);
 ]]
 ----
 Hash Extensions have lots of APIs.
-If you are interest in HE, you can use [[em:perldoc perlguts]].
+If you are interested in HE, you can use [[em:perldoc perlguts]].
 ----
 RV
 ----
@@ -452,7 +452,7 @@ chapter::For C++
 [[#pre:Diffrences with C language.]]
 For example, I have a c++ header file ([[#x:mycase++.h]]) and a c++ source file ([[#x:mycase.cpp]]).
 [[#cm:@_-]][[#r:Note:]]
-Here, I' ll give the .h file. the .cpp file will not be posted for space saving.
+Here, I' ll give the .h file; the .cpp file will not be posted for space saving.
 ➥
 ----
 [[#v:$]][[#ci:cat]] mycase++.h
@@ -517,7 +517,7 @@ void
 Goods::DESTROY()
 ]]
 ----
-Well, I have show you the [[em:two patterns of writing Perl extension]]. 
+Well, I have shown you the [[em:two patterns of writing Perl extension]]. 
 I hope you can use them to write a simple Perl extension now.
 Of course, you have to practise more to get a deep understanding of Perl extension.  
 You will have the pleasure of getting to perl kernel or perl core.
