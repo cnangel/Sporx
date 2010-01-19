@@ -166,7 +166,7 @@ Ftp action which method do, define action as:
     # 0x02 : cd
     # 0x04 : get
     # 0x08 : put
-	# 0x16 : delete
+    # 0x16 : delete
 
 =item B<-t|--timeout>
 
