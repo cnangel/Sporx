@@ -1,4 +1,6 @@
 main_template: sporx.xul
 license_template: license.html
-css_location: css/cnangel.css
-javascript_runtime: lib/sporx.js
+css_location: cnangel.css
+javascript_runtime: sporx.js
+controls_template: controls.xul
+perlxs_slides: perlxs.slides

@@ -10,22 +10,27 @@ my ($slides_path, $output_path) = @ARGV;
 
 my $t = Template->new(
     {
-        INCLUDE_PATH => ['.', 'template/'],
+        INCLUDE_PATH => ['.', 'template/', 'css/', 'lib/', 'slides/'],
     }
 );
 
 my $config = YAML::LoadFile('config.yaml');
 my $main_template = $config->{main_template} || 'sporx.xul';
+my $css_location = $config->{css_location} || 'cnangel.css';
+my $javascript_runtime = $config->{javascript_runtime} || 'sporx.js';
+my $controls_template = $config->{controls_template} || 'controls.xul';
 
 my $data = {
     %$config,
-    slides_content => io($slides_path)->all,
+    slides_content => io($slides_path)->utf8->all,
 };
 
 my $result;
 
+#use Data::Dumper;
+#print Dumper $data;
 $t->process($main_template, $data, \$result) or die $t->error;
 
 unlink($output_path);
-io($output_path)->print($result);
+io($output_path)->utf8->print($result);
 

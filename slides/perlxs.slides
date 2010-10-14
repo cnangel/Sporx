@@ -1,5 +1,5 @@
 title::Perl + XS
-Introduction to ☺[[#c:PerlXS]]☺
+Introduction to &#x263a;[[#c:PerlXS]]&#9786;
  
 [[#author:Cnangel]]
 [[#email:junliang.li@alibaba-inc.com]]
@@ -134,7 +134,7 @@ XSLoader::load('perlxs::test', [[#v:$VERSION]]);
 ----
 header::Makefile.PL Editing 
 chapter::Makefile.PL Editing
-[[#cm:☺]] Now, let's make some change with [[#x:Makefile.PL]] so it will be adapted to [[#i:c/c++]] interface.
+[[#cm:&#x263a;]] Now, let's make some change with [[#x:Makefile.PL]] so it will be adapted to [[#i:c/c++]] interface.
 ----
 [[#pre:Package infomation]]
 There are some ways of describing the packge information. For example, "*_from" means the information is from Pod file.
@@ -217,7 +217,7 @@ align::left
 align::left
 Now, let's add something to our XSub. 
 In this case, we have a c header file([[#x:mycase.h]]) and a c source file([[#x:mycase.c]]), like this:
-➥
+&#x27a5;
 ----
 align::left
 [[#v:$]][[#ci:cat]] mycase.c
@@ -297,7 +297,7 @@ perlxs_myuc(str)
 [[#v:$]]
 ----
 align::left
-[[#cm:☼]] Finally, you can try to make Makefile or Build.
+[[#cm:&#x263c;]] Finally, you can try to make Makefile or Build.
 
 [perl Makefile.PL]
 [(or perl Build.PL)]
@@ -324,12 +324,12 @@ Perl has three typedefs which handle Perl' s [[em:three main data types]].
 ----
 SV
 ----
-[[#kw:☼]][[#pre:SV: Create]]
+[[#kw:&#x263c;]][[#pre:SV: Create]]
 [[pre:
 SV* newSV();
 ]]
 ----
-[[#kw:☼]][[#pre:SV: Apply]]
+[[#kw:&#x263c;]][[#pre:SV: Apply]]
 [[pre:
 SV*  newSViv(IV);
 SV*  newSVuv(UV);
@@ -340,7 +340,7 @@ SV*  newSVpvf(const char*, ...);
 SV*  newSVsv(SV*);
 ]]
 ----
-[[#kw:☼]][[#pre:SV: Modify]]
+[[#kw:&#x263c;]][[#pre:SV: Modify]]
 [[pre:
 void  sv_setiv(SV*, IV);
 void  sv_setuv(SV*, UV);
@@ -352,7 +352,7 @@ void  sv_vsetpvfn(SV*, const char*, STRLEN, va_list *, SV **, I32, bool *);
 void  sv_setsv(SV*, SV*);
 ]]
 ----
-[[#kw:☼]][[#pre:SV: Access Actual Value]]
+[[#kw:&#x263c;]][[#pre:SV: Access Actual Value]]
 [[pre:
 SvIV(SV*)
 SvUV(SV*)
@@ -361,7 +361,7 @@ SvPV(SV*, STRLEN len)
 SvPV_nolen(SV*)
 ]]
 ----
-[[#kw:☼]][[#pre:SV: Append]]
+[[#kw:&#x263c;]][[#pre:SV: Append]]
 [[pre:
 void  sv_catpv(SV*, const char*);
 void  sv_catpvn(SV*, const char*, STRLEN);
@@ -372,13 +372,13 @@ void  sv_catsv(SV*, SV*);
 ----
 AV
 ----
-[[#kw:☼]][[#pre:AV: Create]]
+[[#kw:&#x263c;]][[#pre:AV: Create]]
 [[pre:
 AV*  newAV();
 AV*  av_make(I32 num, SV **ptr);
 ]]
 ----
-[[#kw:☼]][[#pre:AV: Operations]]
+[[#kw:&#x263c;]][[#pre:AV: Operations]]
 [[pre:
 void  av_push(AV*, SV*);
 SV*   av_pop(AV*);
@@ -386,7 +386,7 @@ SV*   av_shift(AV*);
 void  av_unshift(AV*, I32 num);
 ]]
 ----
-[[#kw:☼]][[#pre:AV: Other Functions]]
+[[#kw:&#x263c;]][[#pre:AV: Other Functions]]
 [[pre:
 I32   av_len(AV*);
 SV**  av_fetch(AV*, I32 key, I32 lval);
@@ -398,18 +398,18 @@ void  av_extend(AV*, I32 key);
 ----
 HV
 ----
-[[#kw:☼]][[#pre:HV: Create]]
+[[#kw:&#x263c;]][[#pre:HV: Create]]
 [[pre:
 HV*  newHV();
 ]]
 ----
-[[#kw:☼]][[#pre:HV: Operations]]
+[[#kw:&#x263c;]][[#pre:HV: Operations]]
 [[pre:
 SV**  hv_store(HV*, const char* key, U32 klen, SV* val, U32 hash);
 SV**  hv_fetch(HV*, const char* key, U32 klen, I32 lval);
 ]]
 ----
-[[#kw:☼]][[#pre:HV: Other Functions]]
+[[#kw:&#x263c;]][[#pre:HV: Other Functions]]
 [[pre:
 bool  hv_exists(HV*, const char* key, U32 klen);
 SV*   hv_delete(HV*, const char* key, U32 klen, I32 flags);
@@ -417,7 +417,7 @@ void   hv_clear(HV*);
 void   hv_undef(HV*);
 ]]
 ----
-[[#kw:☼]][[#pre:HV: HE]]
+[[#kw:&#x263c;]][[#pre:HV: HE]]
 Perl keeps the actual data in linked list of structures with a typedef of HE. 
 These structures contain the actual key and value pointers.
 The key is a string pointer; the value is an "SV*". 
@@ -438,7 +438,7 @@ RV
 ----
 A special type of scalar.
 ----
-[[#kw:☼]][[#pre:RV: Create]]
+[[#kw:&#x263c;]][[#pre:RV: Create]]
 [[pre:
 SV* newRV_inc((SV*) thing);
 SV* newRV_noinc((SV*) thing);
@@ -550,7 +550,7 @@ align::left
 header::
 chapter::
 END
-☻
+&#x263b;
 ----
-☺
+&#x263a;
 [[#kw:FAQ]]

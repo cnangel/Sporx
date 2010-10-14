@@ -1,9 +1,6 @@
-﻿<deck flex="1" id="deck">
-
-<vbox flex="1"
-	onmouseup="Presentation.handleEvent(event);"
-	onmousedown="Presentation.handleEvent(event);"
-	onmousemove="Presentation.handleEvent(event);">
+﻿<deck flex="1" id="deck"> 
+	 
+<vbox flex="1"> 
 	<toolbox id="canvasToolbar">
 		<toolbar>
 			<toolbarbutton oncommand="Presentation.home()" label="|&lt;&lt;"
@@ -44,73 +41,96 @@
 				<spacer flex="1"/>
 			</vbox>
 			<toolbarseparator/>
-			<spacer flex="1"/>
-			<hbox>
-				<toolbarbutton label="auto"
-					id="autoButton"
-					type="checkbox"
-					autoCheck="false"
-					oncommand="Presentation.toggleAutoCruiseMode();" />
-				<toolbarbutton id="auto-interval-button"
-					type="menu"
-					label="Interval"
-					tooltiptext="Change Interval"
-					class="dropmarker-button">
-					<menupopup id="auto-interval-list"
-						onpopupshowing="
-							Presentation.preventToShowHideToolbar = true;
-							(this.getElementsByAttribute('value', Presentation.autoCruiseInterval)[0] || this.lastChild).setAttribute('checked', true);
-						"
-						onpopuphiding="Presentation.preventToShowHideToolbar = false;"
-						oncommand="Presentation.changeAutoCruiseInterval(parseInt(event.target.value));">
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="1 sec" value="1000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="2 sec" value="2000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="3 sec" value="3000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="4 sec" value="4000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="5 sec" value="5000"/>
-						<menuseparator/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="1 min" value="60000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="2 min" value="120000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="3 min" value="180000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="4 min" value="240000"/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="5 min" value="300000"/>
-						<menuseparator/>
-						<menuitem type="radio" radiogroup="autocruise-interval"
-							label="Custom"
-							oncommand="
-								var current = Presentation.autoCruiseInterval;
-								var val = parseInt(prompt('input interval (sec)', parseInt(current/1000)));
-								if (isNaN(val)) {
-									event.preventBubble();
-									return;
-								}
-								else
-									val = val * 1000;
-								this.value = val;
-							"/>
-					</menupopup>
-				</toolbarbutton>
-			</hbox>
 			<toolbarbutton label="Pen"
 				id="penButton"
 				type="checkbox"
 				autoCheck="false"
 				oncommand="StrokablePresentationService.toggleCheck();"/>
-			<toolbarseparator/>
-			<toolbarbutton id="toggleEva" label="Eva"
-				type="checkbox"
-				autoCheck="false"
-				oncommand="Presentation.toggleEvaMode();"/>
+			<spacer flex="1"/>
+			<toolbarbutton id="func-menu-button"
+				type="menu"
+				label="Function">
+				<menupopup
+					onpopupshowing="if (event.target == this) { Presentation.preventToShowHideToolbar = true; Presentation.updateTimerItem(); }"
+					onpopuphiding="if (event.target == this) Presentation.preventToShowHideToolbar = false;">
+					<menuitem id="timerItem"
+						label="Set Timer"
+						label-normal="Set Timer"
+						label-active="Reset Timer (rest %smin)"
+						oncommand="Presentation.setTimer();" />
+					<menuseparator/>
+					<menuitem label="Start Auto-Cruise"
+						id="autoButton"
+						type="checkbox"
+						autoCheck="false"
+						oncommand="Presentation.toggleAutoCruiseMode();" />
+					<menu id="auto-interval-button"
+						label="Change Interval">
+						<menupopup id="auto-interval-list"
+							onpopupshowing="(this.getElementsByAttribute('value', Presentation.autoCruiseInterval)[0] || this.lastChild).setAttribute('checked', true);"
+							oncommand="Presentation.changeAutoCruiseInterval(parseInt(event.target.value));">
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="1 sec" value="1000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="2 sec" value="2000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="3 sec" value="3000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="4 sec" value="4000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="5 sec" value="5000"/>
+							<menuseparator/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="1 min" value="60000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="2 min" value="120000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="3 min" value="180000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="4 min" value="240000"/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="5 min" value="300000"/>
+							<menuseparator/>
+							<menuitem type="radio" radiogroup="autocruise-interval"
+								label="Custom"
+								oncommand="
+									var current = Presentation.autoCruiseInterval;
+									var val = parseInt(prompt('input interval (sec)', parseInt(current/1000)));
+									if (isNaN(val)) {
+										event.preventBubble();
+										return;
+									}
+									else
+										val = val * 1000;
+									this.value = val;
+								"/>
+						</menupopup>
+					</menu>
+					<menuseparator/>
+					<menuitem oncommand="Presentation.print();" label="Print"/>
+					<menu id="auto-interval-button"
+						label="Thumbnail Format">
+						<menupopup
+							onpopupshowing="(this.getElementsByAttribute('value', Presentation.imageType)[0] || this.firstChild).setAttribute('checked', true);"
+							oncommand="Presentation.imageType = event.target.value;">
+							<menuitem type="radio" radiogroup="print-image-type"
+								label="PNG" value="png"/>
+							<menuitem type="radio" radiogroup="print-image-type"
+								label="JPEG (50%)" value="jpeg"/>
+						</menupopup>
+					</menu>
+					<menuseparator/>
+					<menuitem id="showPlainText" label="View Source"
+						key="key_plainText"
+						oncommand="Presentation.showPlainText();"/>
+					<menuseparator/>
+					<menuitem id="toggleEva" label="Eva Mode"
+						key="key_toggleEvaMode"
+						type="checkbox"
+						autoCheck="false"
+						oncommand="Presentation.toggleEvaMode();"/>
+				</menupopup>
+			</toolbarbutton>
 			<toolbarseparator/>
 			<toolbarbutton label="Edit"
 				oncommand="Presentation.toggleEditMode();"/>
@@ -124,9 +144,9 @@
 					<label id="header"/>
 					<spacer flex="1"/>
 					<vbox>
-                                              <image id="logo"/>
-                                              <spacer flex="1"/>
-                                        </vbox>
+						<image id="logo"/>
+						<spacer flex="1"/>
+					</vbox>
 				</hbox>
 				<spacer flex="19"/>
 				<hbox id="footerBox" flex="1">
@@ -134,7 +154,11 @@
 					<label id="footer"/>
 				</hbox>
 			</vbox>
-			<vbox flex="1"
+			<vbox id="canvasMain"
+				flex="1"
+				onmouseup="Presentation.handleEvent(event);"
+				onmousedown="Presentation.handleEvent(event);"
+				onmousemove="Presentation.handleEvent(event);"
 				onclick="Presentation.onPresentationClick(event);">
 				<spacer flex="1"/>
 				<hbox flex="1" id="contentBox">
@@ -144,12 +168,39 @@
 				</hbox>
 				<spacer flex="1"/>
 			</vbox>
+			<vbox id="plainTextBox"
+				hidden="true"
+				flex="1"
+				onclick="Presentation.hidePlainText();"
+				align="center"
+				pack="center">
+				<textbox id="plainTextField" multiline="true"
+					onkeypress="if (event.keyCode == event.DOM_VK_ESCAPE) Presentation.hidePlainText();"
+					onclick="event.stopPropagation();"/>
+			</vbox>
 		</stack>
 	</vbox>
+	<hbox id="indicatorBar"
+		onclick="Presentation.onIndicatorBarClick(event);">
+		<stack flex="1">
+			<vbox>
+				<progressmeter id="remainingPageIndicator"
+					type="determined" value="0"
+					flex="1"/>
+				<progressmeter id="remainingTimeIndicator"
+					type="determined" value="0"
+					flex="1"
+					collapsed="true"/>
+			</vbox>
+			<hbox flex="1">
+				<label value="Next:"/>
+				<description id="nextPage" flex="1" crop="end"/>
+			</hbox>
+		</stack>
+	</hbox>
 </vbox>
-
-
-<vbox flex="1" id="edit">
+ 
+<vbox flex="1" id="edit"> 
 	<toolbox>
 		<toolbar>
 			<menubar flex="1">
@@ -193,19 +244,44 @@
 			<toolbarbutton oncommand="Presentation.reload();" label="Reload"/>
 		</toolbar>
 	</toolbox>
-	<textbox id="textField" flex="1" multiline="true"
-		oninput="Presentation.onEdit()"/>
+	<tabbox id="editTabBox" flex="1">
+		<tabs onselect="Presentation.toggleEditStyle(event);">
+			<tab label="Page Edit" id="editTab-pages"/>
+			<tab label="Source" id="editTab-source"/>
+		</tabs>
+		<tabpanels flex="1">
+			<scrollbox id="pageEditFields"
+				orient="vertical"
+				flex="1"/>
+			<textbox id="sourceEditField"
+				flex="1"
+				multiline="true"
+				oninput="Presentation.onEditSource()"/>
+		</tabpanels>
+	</tabbox>
 </vbox>
-
-</deck>
-
-
-<broadcasterset>
+ 
+</deck> 
+  
+<data style="visibility: collapse;"> 
+	<hbox id="pageEditBoxTemplate">
+		<textbox multiline="true"
+			class="page-edit-box-main"
+			flex="1"
+			oninput="Presentation.onEditPage(Number(this.parentNode.parentNode.id.match(/\d+/)))"/>
+		<vbox>
+			<toolbarbutton label="×"
+				oncommand="Presentation.removePage(Number(this.parentNode.parentNode.id.match(/\d+/)));"/>
+		</vbox>
+	</hbox>
+</data>
+ 
+<broadcasterset> 
 	<broadcaster id="canBack"/>
 	<broadcaster id="canForward"/>
 </broadcasterset>
-
-<commandset>
+ 
+<commandset> 
 	<command id="cmd_forward"
 		oncommand="if (Presentation.isPresentationMode) Presentation.forward();"/>
 	<command id="cmd_forwardStep"
@@ -217,7 +293,8 @@
 	<command id="cmd_end"
 		oncommand="if (Presentation.isPresentationMode) Presentation.end();"/>
 </commandset>
-<keyset>
+ 
+<keyset> 
 	<key keycode="VK_ENTER"      command="cmd_forwardStep"/>
 	<key keycode="VK_RETURN"     command="cmd_forwardStep"/>
 	<key keycode="VK_PAGE_DOWN"  command="cmd_forwardStep"/>
@@ -237,7 +314,15 @@
 		key="s" modifiers="accel" oncommand="Presentation.output();"/>
 	<key id="key_reload"
 		key="r" modifiers="accel" oncommand="Presentation.reload();"/>
+	<key id="key_reload"
+		key="p" modifiers="accel" oncommand="Presentation.print();"/>
 
-	<key key="e" modifiers="accel" oncommand="Presentation.toggleEditMode();"/>
-	<key key="e" modifiers="accel,shift" oncommand="Presentation.toggleEvaMode();"/>
+	<key id="key_toggleEditMode"
+		key="e" modifiers="accel" oncommand="Presentation.toggleEditMode();"/>
+	<key id="key_toggleEvaMode"
+		key="e" modifiers="accel,shift" oncommand="Presentation.toggleEvaMode();"/>
+
+	<key id="key_plainText"
+		key="u" modifiers="accel" oncommand="Presentation.showPlainText();"/>
+	<key keycode="VK_ESCAPE"      oncommand="Presentation.hidePlainText();"/>
 </keyset>
