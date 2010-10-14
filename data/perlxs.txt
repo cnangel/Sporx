@@ -1,0 +1,558 @@
+
+title::Perl + XS
+Introduction to ☺[[#c:PerlXS]]☺
+ 
+[[#author:Cnangel]]
+[[#email:junliang.li@alibaba-inc.com]]
+[[#date:2009.09]]
+[[image src="data:image/png;base64,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" width="96" height="80"]]
+
+----
+header::Unabridged document
+align::left
+
+[[#x:* What should you know first?]]
+[[#x:* Perlguts & Perlapi]]
+[[#x:* How to write perl extension]]
+[[#x:* The end]]
+
+[[download|http://fans.huhoo.net/perlxs/perlxs.doc]]
+----
+header::Template Creating
+chapter::Template Creating
+Start
+----
+You can create a template with module-starter tool.
+----
+align::left
+
+
+[[#v:$]][[#ci:module-starter]] --module=perlxs::test -mi --author =Cnangel \
+--email=junliang.li@alibaba-inc.com --license=GPLv3
+[[#gray:Created starter directories and files]]
+[[#v:$]][[#x:cd]] perlxs-test/
+[[#v:$]][[#x:ls]] -l
+[[#gray:total 24]]
+[[#gray:drwxrwxr-x 3 cnangel cnangel 4096 09-05 13:14 lib]]
+[[#gray:drwxrwxr-x 2 cnangel cnangel 4096 09-05 13:14 t]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel  196 09-05 13:14 Makefile.PL]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel  111 09-05 13:14 Changes]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel 1344 09-05 13:14 README]]
+[[#gray:-rw-rw-r-- 1 cnangel cnangel   92 09-05 13:14 MANIFEST]]
+[[#v:$]]
+----
+You can use other tools for creating a template as well.
+----
+align::left
+
+
+[[#purple:1,]][[#g:h2xs]]
+[[#v:$]][[#ci:h2xs]] -axc -n perlxs::test 
+[[#gray:Defaulting to backwards compatibility with perl 5.10.0]]
+[[#gray:If you intend this module to be compatible with earlier perl versions,]]
+[[#gray:please specify a minimum perl version with the -b option.]]
+
+[[#gray:Writing perlxs-test/ppport.h]]
+[[#gray:Scanning typemaps...]]
+[[#gray: Scanning /usr/lib/perl5/5.10.0/ExtUtils/typemap]]
+[[#gray:Writing perlxs-test/lib/perlxs/test.pm]]
+[[#purple:Writing perlxs-test/test.xs]]
+[[#gray:Writing perlxs-test/Makefile.PL]]
+[[#gray:Writing perlxs-test/README]]
+[[#gray:Writing perlxs-test/t/perlxs-test.t]]
+[[#gray:Writing perlxs-test/Changes]]
+[[#gray:Writing perlxs-test/MANIFEST]]
+[[#v:$]]
+----
+align::left
+[[#purple:2,]][[#g:modulemaker]]
+Tips with many options will appear after the command run ,and you can follow them to next steps.
+|~Feature|~Detail|~Current Value
+|N|Name of module|              ''
+|S|Abstract|                    'Module abstract (<= 44 characters) goes here'
+|A|Author information|
+|L|License|                     'perl'
+|D|Directives|
+|B|Build system|                'Module::Build'
+|G|Generate module|
+|H|Generate module;save selections as defaults|
+|X|Exit immediately|
+----
+header::XSub Using
+chapter::XSub Using
+There are tow patterns you can use to design the perl module: 
+([[#x:lib/perlxs/test.pm]])
+One is Function Pattern;
+The other is Object Oriented Pattern. 
+
+If you are interested,
+you can try to learn how they work and get them,
+and this will be rewarding. 
+----
+Function
+----
+align::left
+
+[[#cm:# lib/perlxs/test.pm]]
+[[#kw:package]] perlxs::test;
+[[#cm:# use version, strict, warnings and define version]]
+...
+[[#kw:require]] Exporter;
+[[#kw:our]] [[#v:@ISA]] = [[#kw:qw]](Exporter);
+[[#kw:our]] [[#v:%EXPORT_TAGS]] = ( 'all' => [ qw(
+) ] );
+[[#kw:our]] [[#v:@EXPORT_OK]] = ( @{ [[#v:$EXPORT_TAGS]]{'all'} } );
+[[#kw:our]] [[#v:@EXPORT]] = [[#kw:qw]](
+				);
+...
+[[#kw:require]] XSLoader;
+XSLoader::load('perlxs::test', [[#v:$VERSION]]);
+[[#kw:sub]] fun1 {
+}
+...
+1;
+----
+Object Oriented
+----
+align::left
+
+[[#cm:# lib/perlxs/test.pm]]
+[[#kw:package]] perlxs::test;
+[[#cm:# use version, strict, warnings and define version]]
+...
+[[#kw:require]] XSLoader;
+XSLoader::load('perlxs::test', [[#v:$VERSION]]);
+
+[[#cm:# or make use of xsub itemself]]
+[[#kw:sub]] new {
+	[[#kw:my]] [[#v:$class]] = [[#kw:shift;]]
+	[[#kw:my]] [[#v:$self]] = {};
+	[[#kw:bless]] [[#v:$self]], [[#v:$class]];
+	[[#kw:return]] [[#v:$self;]]
+}
+...
+1;
+----
+header::Makefile.PL Editing 
+chapter::Makefile.PL Editing
+[[#cm:☺]] Now, let's make some change with [[#x:Makefile.PL]] so it will be adapted to [[#i:c/c++]] interface.
+----
+[[#pre:Package infomation]]
+There are some ways of describing the packge information. For example, "*_from" means the information is from Pod file.
+|name											`|
+||all_from
+|abstract										`|abstract_from
+|author											`|author_from
+|version											`|version_from
+|license											`|license_from
+|perl_version										`|perl_version_from
+----
+[[#pre:Depend infomation]]
+|~function|~explain&information|~function|~explain&information
+|recommends| run which require module, but not must |requires| run which require module
+|test_requires| test which require module |configure_requires| configure which require module
+|requires_external_bin| run which require binary | |
+|cc_files|C&C++ source files |cc_inc_paths| path which include header file(s)
+|cc_lib_paths| path which include library file(s) |cc_lib_links| name which is library file(s)
+|cc_optimize_flags| optimize flags |can_use|
+|can_run| |can_cc|
+----
+[[#pre:Depend package checking]]
+|~Module name|~function|~example
+|Devel::CheckLib|check_lib_or_exit|check_lib_or_exit( lib => [ 'log4cpp', 'libconfig' ], header => 'libconfig.h' );
+|Module::Install::CheckLib|checklibs|checklibs lib => [ 'log4cpp', 'libconfig' ], header => 'libconfig.h';
+----
+[[#pre:Package install information]]
+|install_script| binary
+|installdirs, install_as_*|install path or method
+|no_index|
+|WriteAll| write makefile or build
+----
+align::left
+[[#v:$]][[#ci:cat]] Makefile.PL
+[[pre:
+use strict;
+use lib '.';
+use inc::Module::Install;
+name                    'perlxs-test';
+all_from                'lib/perlxs/test.pm';
+author                  'Cnangel <junliang.li@alibaba-inc.com>';
+license                 'GPL';
+requires                'File::Find' => 1.00;
+requires                'Conf::Libconfig' => 0.010;
+test_requires   'Test::Exception' => 0.27;
+test_requires   'Test::Deep' => 0.103;
+]]
+----
+[[pre:
+...
+test_requires   'Test::Exception' => 0.27;
+test_requires   'Test::Deep' => 0.103;
+checklibs               lib => [qw(config mycase)], header => [qw(libconfig.h mycase.h)];
+cc_inc_paths    '.', '/usr/include', '/usr/local/include';
+cc_lib_paths    '.', '/usr/lib' , '/usr/lib64', '/usr/local/lib', '/usr/local/lib64';
+cc_lib_links    'config', 'mycase';
+can_cc                  or die 'This module requires C compiler.';
+no_index                directory => qw(t inc);
+auto_install();
+WriteAll();
+]]
+----
+header::XSub Building
+chapter::XSub Building
+align::left
+Then, you can execute h2xs or use manual to get a standard template. [[#cm:^_-]]
+----
+align::left
+[[#v:$]][[#ci:vim]] test.xs
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+
+
+[[#y:MODULE]] [[#gray:= perlxs::test]]           [[#y:PACKAGE]] [[#gray:= perlxs::test]]
+[[#v:$]]
+----
+align::left
+Now, let's add something to our XSub. 
+In this case, we have a c header file([[#x:mycase.h]]) and a c source file([[#x:mycase.c]]), like this:
+➥
+----
+align::left
+[[#v:$]][[#ci:cat]] mycase.c
+[[pre:
+int mylc(char *str, size_t strLen)
+{
+	if (strLen == 0) return 1;
+	int i = 0;
+	for (; i < strLen; i++) { if (str[i] >= 'A' && str[i] <= 'Z') { str[i] = str[i] + ' '; } }
+	return 0;
+}
+int myuc(char *str, size_t strLen)
+{
+	if (strLen == 0) return 1;
+	int i = 0;
+	for (; i < strLen; i++) { if (str[i] >= 'a' && str[i] <= 'z') { str[i] = str[i] - ' '; } }
+	return 0;
+}
+]]
+[[#v:$]]
+----
+align::left
+[[#v:$]][[#ci:cat]] mycase.h
+[[pre:
+extern int mylc(char *str, size_t strLen);
+extern int myuc(char *str, size_t strLen);
+]]
+[[#v:$]]
+----
+align::left
+[[#v:$]][[#ci:more]] test.xs
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+
+[#include "mycase.h"]
+
+[[#y:MODULE]] [[#gray:= perlxs::test]]           [[#y:PACKAGE]] [[#gray:= perlxs::test]]        [PREFIX = perlxs_]
+----
+align::left
+[[#v:$]][[#ci:more]] test.xs
+[[pre:
+MODULE = perlxs::test           PACKAGE = perlxs::test        PREFIX = perlxs_
+SV *
+perlxs_mylc(str)
+	char *str
+	PPCODE:
+	{
+		if (str) {
+			mylc(str, strlen(str));
+		}
+		EXTEND(SP, 1);
+		PUSHs(sv_2mortal(newSVpvn(str, strlen(str))));
+	}
+]]
+----
+align::left
+[[#v:$]][[#ci:more]] test.xs
+[[pre:
+SV *
+perlxs_myuc(str)
+	char *str
+	PREINIT:
+		SV *sv;
+	CODE:
+		if (str) {
+			myuc(str, strlen(str));
+			sv = sv_2mortal(newSVpvn(str, strlen(str)));
+		} else
+			sv = sv_2mortal(newSV(0));
+		RETVAL = sv;
+	OUTPUT:
+		RETVAL
+]]
+[[#v:$]]
+----
+align::left
+[[#cm:☼]] Finally, you can try to make Makefile or Build.
+
+[perl Makefile.PL]
+[(or perl Build.PL)]
+[make]
+[make test]
+[make install]
+----
+header::Perl Datatypes
+chapter::Perl Datatypes
+Perl has three typedefs which handle Perl' s [[em:three main data types]].
+|SV|Scalar Value
+|AV|Array Value
+|HV|Hash Value
+----
+[[#pre:Other Datatypes]]
+|IV|integer variables
+|UV|unsigned integer variables
+|I32|32-bits integer
+|U32|unsigned 32-bits integer
+|I16|16-bits integer
+|U16|unsigned 16-bits integer
+|NV|double variables
+|PV|string variables
+----
+SV
+----
+[[#kw:☼]][[#pre:SV: Create]]
+[[pre:
+SV* newSV();
+]]
+----
+[[#kw:☼]][[#pre:SV: Apply]]
+[[pre:
+SV*  newSViv(IV);
+SV*  newSVuv(UV);
+SV*  newSVnv(double);
+SV*  newSVpv(const char*, STRLEN);
+SV*  newSVpvn(const char*, STRLEN);
+SV*  newSVpvf(const char*, ...);
+SV*  newSVsv(SV*);
+]]
+----
+[[#kw:☼]][[#pre:SV: Modify]]
+[[pre:
+void  sv_setiv(SV*, IV);
+void  sv_setuv(SV*, UV);
+void  sv_setnv(SV*, double);
+void  sv_setpv(SV*, const char*);
+void  sv_setpvn(SV*, const char*, STRLEN);
+void  sv_setpvf(SV*, const char*, ...);
+void  sv_vsetpvfn(SV*, const char*, STRLEN, va_list *, SV **, I32, bool *);
+void  sv_setsv(SV*, SV*);
+]]
+----
+[[#kw:☼]][[#pre:SV: Access Actual Value]]
+[[pre:
+SvIV(SV*)
+SvUV(SV*)
+SvNV(SV*)
+SvPV(SV*, STRLEN len)
+SvPV_nolen(SV*)
+]]
+----
+[[#kw:☼]][[#pre:SV: Append]]
+[[pre:
+void  sv_catpv(SV*, const char*);
+void  sv_catpvn(SV*, const char*, STRLEN);
+void  sv_catpvf(SV*, const char*, ...);
+void  sv_vcatpvfn(SV*, const char*, STRLEN, va_list *, SV **, I32, bool);
+void  sv_catsv(SV*, SV*);
+]]
+----
+AV
+----
+[[#kw:☼]][[#pre:AV: Create]]
+[[pre:
+AV*  newAV();
+AV*  av_make(I32 num, SV **ptr);
+]]
+----
+[[#kw:☼]][[#pre:AV: Operations]]
+[[pre:
+void  av_push(AV*, SV*);
+SV*   av_pop(AV*);
+SV*   av_shift(AV*);
+void  av_unshift(AV*, I32 num);
+]]
+----
+[[#kw:☼]][[#pre:AV: Other Functions]]
+[[pre:
+I32   av_len(AV*);
+SV**  av_fetch(AV*, I32 key, I32 lval);
+SV**  av_store(AV*, I32 key, SV* val);
+void  av_clear(AV*);
+void  av_undef(AV*);
+void  av_extend(AV*, I32 key);
+]]
+----
+HV
+----
+[[#kw:☼]][[#pre:HV: Create]]
+[[pre:
+HV*  newHV();
+]]
+----
+[[#kw:☼]][[#pre:HV: Operations]]
+[[pre:
+SV**  hv_store(HV*, const char* key, U32 klen, SV* val, U32 hash);
+SV**  hv_fetch(HV*, const char* key, U32 klen, I32 lval);
+]]
+----
+[[#kw:☼]][[#pre:HV: Other Functions]]
+[[pre:
+bool  hv_exists(HV*, const char* key, U32 klen);
+SV*   hv_delete(HV*, const char* key, U32 klen, I32 flags);
+void   hv_clear(HV*);
+void   hv_undef(HV*);
+]]
+----
+[[#kw:☼]][[#pre:HV: HE]]
+Perl keeps the actual data in linked list of structures with a typedef of HE. 
+These structures contain the actual key and value pointers.
+The key is a string pointer; the value is an "SV*". 
+However, once you have an "HE*", to get the actual key and value, 
+use the routines specified below.
+[[pre:
+I32    hv_iterinit(HV*);
+HE*    hv_iternext(HV*);
+char*  hv_iterkey(HE* entry, I32* retlen);
+SV*    hv_iterval(HV*, HE* entry);
+SV*    hv_iternextsv(HV*, char** key, I32* retlen);
+]]
+----
+Hash Extensions have lots of APIs.
+If you are interested in HE, you can use [[em:perldoc perlguts]].
+----
+RV
+----
+A special type of scalar.
+----
+[[#kw:☼]][[#pre:RV: Create]]
+[[pre:
+SV* newRV_inc((SV*) thing);
+SV* newRV_noinc((SV*) thing);
+]]
+----
+RV is very important. Remember it. 
+Now, let's start our journey of writing perl extension with c++ language. 
+----
+header::For C++
+chapter::For C++
+[[#pre:Diffrences with C language.]]
+For example, I have a c++ header file ([[#x:mycase++.h]]) and a c++ source file ([[#x:mycase.cpp]]).
+[[#cm:@_-]][[#r:Note:]]
+Here, I' ll give the .h file; the .cpp file will not be posted for space saving.
+➥
+----
+[[#v:$]][[#ci:cat]] mycase++.h
+[[pre:
+namespace goods {
+class Goods {
+public:
+	Goods();
+	~Goods();
+public:
+	add(int goodid);
+	update(int goodid);
+	drop(int goodid);
+};
+};
+]]
+----
+align::left
+[[#v:$]][[#ci:vim]] test.xs
+[#ifdef __cplusplus]
+[extern "C" {]
+[#endif]
+[[#g:#include]] [[#r:"EXTERN.h"]]
+[[#g:#include]] [[#r:"perl.h"]]
+[[#g:#include]] [[#r:"XSUB.h"]]
+
+[[#g:#include]] [[#r:"ppport.h"]]
+[#ifdef __cplusplus]
+[}]
+[#endif]
+
+[#include "mycase++.h"]
+[using namespace goods;]
+
+[[#y:MODULE]] [[#gray:= China::Goods]]           [[#y:PACKAGE]] [[#gray:= China::Goods]]     
+----
+[[#pre:CONSTRUCT]]
+[[pre:
+Goods *
+Goods::new(const char *cfgfile)
+]]
+----
+[[#pre:TYPEMAP]]
+[[pre:
+TYPEMAP
+Goods *		O_OBJECT
+]]
+----
+[[#pre:OVERLOAD]]
+[[pre:
+int
+Goods::add(int goodsid)
+int
+Goods::update(int goodsid)
+int
+Goods::drop(int goodsid)
+]]
+----
+[[#pre:DESTRUCTOR]]
+[[pre:
+void
+Goods::DESTROY()
+]]
+----
+Well, I have shown you the [[em:two patterns of writing Perl extension]]. 
+I hope you can use them to write a simple Perl extension now.
+Of course, you have to practise more to get a deep understanding of Perl extension.  
+You will have the pleasure of getting to perl kernel or perl core.
+----
+header::The Conclusion
+chapter::The Conclusion
+align::left
+It is [[em:faster]] using perl extension with c than using pure perl.
+perl extension with c/c++ frame can do many things in a [[em:simple]] way. 
+Using Perl extension in CGI or mod_perl will make your system more [[em:stronger]]. 
+Combined with UNIX and Linux system, perl extension is [[em:widely]] used all over the world. 
+----
+Glue language
+----
+header::Useful Links
+chapter::Useful Links
+align::left
+[[http://perldoc.perl.org/perlapi.html]]
+[[http://perldoc.perl.org/perlxs.html]]
+[[http://search.cpan.org/~cnangel/getaddress-0.02/]]
+[[http://search.cpan.org/~cnangel/Conf-Libconfig-0.014/]]
+[[http://my.huhoo.net/study/]]
+----
+align::left
+[[http://perlchina.org/]]
+[[http://www.movabletype.org/]]
+[[http://www.twiki.org/]]
+[[https://github.com/]]
+----
+header::
+chapter::
+END
+☻
+----
+☺
+[[#kw:FAQ]]
+

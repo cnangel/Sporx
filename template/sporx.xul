@@ -1,32 +1,28 @@
 [%- DEFAULT css_location='css/sporx.css' -%]
 [%- DEFAULT javascript_runtime='lib/sporx.js' -%]
 <?xml version="1.0" encoding="UTF-8"?>
+
+[% INCLUDE $license_template %]
+
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-
-<!-- Built-in Style --> 
-
 <?xml-stylesheet href="[% css_location %]" type="text/css"?>
 
 <page xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-    id="presentation" 
-	xmlns:html="http:/www.w3.org/1999/xhtml"
+	id="presentation"
+	xmlns:html="http://www.w3.org/1999/xhtml"
 	orient="vertical"
 	onkeypress="Presentation.onKeyPress(event);">
 
-<!-- Built-in Content -->
-
 <html:textarea id="builtinCode" style="visibility: collapse">
-[% slides_content %]
+TITLE::Perl + XS
+[[Click here to start the PerlXS|perlxs.xul?data=perlxs.txt]]
 </html:textarea>
-
-<!-- Interface --> 
 
 [% INCLUDE controls.xul %]
 
-<!-- Implementation --> 
 
 <script src="[% javascript_runtime %]" type="application/x-javascript" />
 
+
 </page>
 
-[% INCLUDE $license_template %]
